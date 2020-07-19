@@ -4,9 +4,9 @@ SC code:
 
 - record skipping
 -- records input, then plays it back at the same rate with occasional skips
-- playback chorus
+- playback slow chorus
 -- records input, plays back at different rates adjusted for pitch
-- drone pattern
+- Joe's Pattern
 -- a pattern that layers Joe's drones on top of each other in several configs
 - pitch detector/freeze/playback
 --Listens for certain pitches and either freezes them when it hears them, or
@@ -66,11 +66,15 @@ Ok so It's called boomtown because I had a dream where I was referred to as boom
 
     Ok I'm getting off topic. I want the piece to sound like an echo, bouncing
     through abandoned mines and factories of small town America. And yeah, it's
-    sad. And forlorn. They've just been totally forgotten about, and now change
-    comes as the cities draw in the young people leaving communities to die
-    alone. The people in small communities have hopes and dreams just like the
+    sad. And forlorn. They've just been totally forgotten about, they've been
+    the butt of every american joke, and now change comes as the cities draw in
+    the young people leaving communities to die alone.
+    The people in small communities have hopes and dreams just like the
     rest of us, but it's easy for us to see them as less. They're uneducated,
     they're poor, they have problematic histories. But if we expect so little of
     them, they'll live up to those expectations. And they really don't have any
     power. They just get thrown around and treated like garbage, and have been
     for centuries!
+
+    Boomtown is a look at rural America after the mines shut down, after the
+    factories shutter their doors, after the jobs moved overseas.
