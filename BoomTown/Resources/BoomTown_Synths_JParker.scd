@@ -44,3 +44,37 @@ SynthDef(\skipBuf, {//record skipping synth by dust.
 	sig = FreeVerb.ar(sig);
 	Out.ar(0, sig);
 }).add;
+
+(
+SynthDef(\joeSynth, {
+	arg amp = 1, atk = 1, sus = 1, rel = 1, bufnum = 0, pan = 0, mix = 0.33, room = 0.5, damp = 0.5;
+	var sig, env;
+
+	env = EnvGen.kr(Env.new([0,1,1,0], [atk, sus, rel]), doneAction: 2);
+	sig = PlayBuf.ar(2, bufnum, loop: 1);
+	sig = Pan2.ar(sig, pan);
+	sig = FreeVerb.ar(sig, mix, room, damp);
+	sig = sig * amp * env;
+	Out.ar(0, sig);
+}).add;
+);
+
+(
+SynthDef(\joeSynthSkip, {//record skipping synth by dust.
+	arg skipDur = -0.5, bufnum, skipDens = 1, amp = 1, atk = 1, sus = 1, rel = 1, pan = 0, mix = 0.33, room = 0.5, damp = 0.5;
+	var sig, pos, resetPos, env;
+
+	env = EnvGen.kr(Env.new([0,1,1,0], [atk, sus, rel]), doneAction: 2);
+
+	resetPos = LocalIn.kr(2).clip(0, BufFrames.kr(bufnum));
+
+	pos = Phasor.ar(Dust.ar(1), BufRateScale.kr(bufnum), 0, BufFrames.kr(bufnum), resetPos);
+
+	LocalOut.kr(BufSampleRate.kr(bufnum) * skipDur + pos);
+
+	sig = BufRd.ar(2, bufnum, pos);
+	sig = sig * env * amp;
+	sig = FreeVerb.ar(sig, );
+	Out.ar(0, sig);
+}).add;
+)

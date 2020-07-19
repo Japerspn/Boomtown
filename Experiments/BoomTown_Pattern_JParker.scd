@@ -1,4 +1,4 @@
-s.reboot
+s.boot
 
 Server.killAll
 (
@@ -43,29 +43,20 @@ SynthDef(\joeSynthGate, {//setable w/ gate
 }).add;
 );
 
-(
-SynthDef(\joeSynth, {
-	arg amp = 1, atk = 1, sus = 1, rel = 1, bufnum = 0, pan = 0, mix = 0.33, room = 0.5, damp = 0.5;
-	var sig, env;
-
-	env = EnvGen.kr(Env.new([0,1,1,0], [atk, sus, rel]), doneAction: 2);
-	sig = PlayBuf.ar(2, bufnum, loop: 1);
-	sig = Pan2.ar(sig, pan);
-	sig = FreeVerb.ar(sig, mix, room, damp);
-	sig = sig * amp * env;
-	Out.ar(0, sig);
-}).add;
-);
 
 (
-a = Synth(\joeSynth, [
+a = Synth(\joeSynthSkip, [
 	\bufnum: ~beef3,
 	\atk: 5,
 	\sus: 5,
 	\rel: 5,
-	\mix: 1
+	\mix: 1,
+	\skipDur, -1,
+	\skipDens, 3
 ])
 );
+
+
 (
 if(p.isPlaying, {p.stop});
 p = Pbind(
@@ -81,41 +72,20 @@ p = Pbind(
 p.isPlaying;
 )
 
+(
+if(p.isPlaying, {p.stop});
+p = Pbind(
+	\instrument, \joeSynthSkip,
+	\bufnum, Pxrand(~gAndD, inf),
+	\atk, 5,
+	\sus, 5,
+	\rel, 5,
+	\dur, 1,
+	\mix, 0.7,
+	\room, 0,
+	\skipDur, -0.5,
+	\skipDens, 10
+).play;
+)
+
 p.stop
-
-if(p.isPlaying, {p.stop})
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
