@@ -79,12 +79,26 @@ w = Window("121 Sketch", Rect(
 .action_({|view|
 	if(view.value == 1,
 		{"It's on!".postln;
-			s.record;
+			s.record(thisProcess.nowExecutingPath.dirname.dirname +/+ "Recordings" +/+ "Rec" + Date.localtime + ".wav");
 		}, {
 			s.stopRecording
 		}
 )})
 
 
+
+~startButton = Button(w, Rect(240, 150, 100, 40))
+.states_([["RECORD", Color.green, Color.black],["Stop", Color.red, Color.black]])
+.action_({|view|
+	if(view.value == 1,
+		{"It's on!".postln;
+			if(~joePattern1.isPlaying, {~joePattern1.stop});
+			//start G+D Pattern
+			~joePattern1.play;
+			//start Listener
+		}, {
+			if(~joePattern1.isPlaying, {~joePattern1.stop});
+		}
+)});
 
 
