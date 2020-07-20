@@ -15,23 +15,14 @@ OSCdef(\aToB, { arg msg, time, addr, recvPort;
 	~pitchDetAtoB.free;
 
 	//Free Letter A Pattern
-	~joePattern1.stop;
+	~patternPlayer.stop;
 
 	//Start Letter B Pattern
-	~joePattern2 = Pbind(//Starts New Pattern
-		\instrument, \joeSynth,
-		\bufnum, Pxrand(~gPent, inf),
-		\atk, 5,
-		\sus, 5,
-		\rel, 5,
-		\dur, 3,
-		\mix, 0.8,
-		\room, 0.86
-	).play;
+	~patternPlayer = ~joePatternB.play;
 
 	//Start B to C Listener
 	~pitchDetBtoC = Synth(\pitchDetective, [
-		\tarFreq: 349, //F4
+		\tarFreq: 233, //B-flat 3
 		\id, 0
 	]);
 

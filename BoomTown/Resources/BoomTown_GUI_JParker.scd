@@ -8,7 +8,10 @@ w = Window("121 Sketch", Rect(
 .front
 .alwaysOnTop_(true)
 .background_(Color.cyan(0.4, 1))
-.onClose_({s.freeAll});
+.onClose_({
+	s.freeAll
+
+});
 
 ~startButtonA = Button(w, Rect(10, 10, 40, 40))//Letter A
 .states_([["Letter A", Color.green, Color.black]])
@@ -16,7 +19,7 @@ w = Window("121 Sketch", Rect(
 	"Letter A".postln;
 
 	//start G+D Pattern
-	~joePatternA.play;
+	~patternPlayer = ~joePatternA.play;
 
 	//start Listener
 	~pitchDetAtoB = Synth(\pitchDetective, [
@@ -31,6 +34,7 @@ w = Window("121 Sketch", Rect(
 
 	~startButtonA.visible_("false");
 	~startButtonB.visible_("false");
+	~startButtonC.visible_("false");
 });
 
 ~startButtonB = Button(w, Rect(60, 10, 40, 40))//Letter A
@@ -39,11 +43,11 @@ w = Window("121 Sketch", Rect(
 	"Letter B".postln;
 
 	//start Letter B Pattern
-	~joePatternB.play;
+	~patternPlayer = ~joePatternB.play;
 
 	//start Listener
 	~pitchDetBtoC = Synth(\pitchDetective, [
-		\tarFreq: 432, //A3
+		\tarFreq: 233, //B-flat 3
 		\id, 0
 	]);
 	//enable Listener OSC func
@@ -53,15 +57,15 @@ w = Window("121 Sketch", Rect(
 
 	~startButtonA.visible_("false");
 	~startButtonB.visible_("false");
-
+	~startButtonC.visible_("false");
 });
 
 ~startButtonC = Button(w, Rect(110, 10, 40, 40))//Letter A
-.states_([["Letter C", Color.green, Color.black],["Stop", Color.red, Color.black]])
+.states_([["Letter C", Color.green, Color.black]])
 .action_({
 	"Letter C".postln;
 	//Start Letter C Pattern
-	~joePattern3.play;
+	~patternPlayer = ~joePattern3.play;
 
 	//Start Slow Chorus
 	t = Task({
@@ -88,26 +92,27 @@ w = Window("121 Sketch", Rect(
 
 	~startButtonA.visible_("false");
 	~startButtonB.visible_("false");
+	~startButtonC.visible_("false");
+
 
 });
 
 ~stopButton = Button(w, Rect(10,100,40,40))//Stop Button
-.states([["STOP", Color.red],["STOP", Color.red]])
+.states_([["STOP", Color.green, Color.black]])
+.visible_("false")
 .action_({
 	s.freeAll;
-	if(~joePattern1.isPlaying, {~joePattern1.stop});
-	if(~joePattern2.isPlaying, {~joePattern2.stop});
+	if(~patternPlayer.isPlaying, {~patternPlayer.stop});
+	if(t.isPlaying, {t.stop});
 
 	~stopButton.visible_("false");
 
 	~startButtonA.visible_("true");
 	~startButtonB.visible_("true");
-	~startButtonC.visible_("false");
+	~startButtonC.visible_("true");
 
 	OSCdef(\aToB).disable;
 	OSCdef(\bToC).disable;
-
-
 
 });
 
@@ -120,18 +125,10 @@ w = Window("121 Sketch", Rect(
 		}, {
 			s.stopRecording
 		}
-)})
+)});
 
 
-
-
-
-
-
-
-
-
-
+s.plotTree;
 
 
 
@@ -197,9 +194,3 @@ t = Task({
 ~skipSynth3.free;
 }
 )});*/
-
-
-
-
-
-

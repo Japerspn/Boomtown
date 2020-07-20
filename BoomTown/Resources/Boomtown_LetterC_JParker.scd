@@ -16,10 +16,10 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 	~pitchDetBtoC.free;
 
 	//Free Letter B Pattern
-	~joePattern2.stop;
+	~patternPlayer.stop;
 
 	//Start Letter C Pattern
-	~joePattern3.play;
+	~patternPlayer = ~joePattern3.play;
 
 	//Start Slow Chorus
 	t = Task({

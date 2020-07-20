@@ -88,7 +88,7 @@ SynthDef(\pitchDetective,{ // frequency between loFreq and hiFreq sends a trigge
 	//sig = SinOsc.ar(inFreq, mul: 0.5).lag(3);
 
 	# freq, hasFreq = Tartini.kr(sig);
-	//freq.poll;
+	freq.poll;
 
 	SendTrig.kr(
 		(
