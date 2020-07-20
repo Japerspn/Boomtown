@@ -25,16 +25,18 @@ s.waitForBoot({
 
 	~all = [~g3, ~beef3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~f5, ~fis5, ~g5, ~a5, ~beef5, ~b5, ~d6, ~e6];
 	~gPent = [~g3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~g5, ~a5, ~d6];
-
+	~justG = [~g3, ~g4, ~g5];
 	~gAndD = [~g3, ~g4, ~d5one, ~d5two, ~g5, ~d6];
 	~gMaj = [~g3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~fis5, ~g5, ~a5, ~b5, ~d6, ~e6];
 	~gDom = [~g3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~f5, ~g5, ~a5, ~b5, ~d6, ~e6];
 	~gMin = [~g3, ~beef3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~f5, ~g5, ~a5, ~beef5, ~d6];
 
-
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_Gui_JParker.scd", "r").readAllString.interpret;
-
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_Synths_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterA_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterB_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterC_JParker.scd", "r").readAllString.interpret;
+
 });
 
 if(s.serverRunning, {
@@ -49,6 +51,7 @@ if(s.serverRunning, {
 })
 
 );
+
 
 
 
