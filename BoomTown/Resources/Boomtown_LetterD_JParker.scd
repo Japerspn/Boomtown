@@ -8,7 +8,7 @@ OSCdef(\cToD, { arg msg, time, addr, recvPort;
 	~patternPlayer.stop;
 
 	//Free Slow Chorus Synth
-	~recSynth.free;
+	~recSynth.set(\gate, 0);
 	~pbSynth1.set(\gate, 0);
 	~pbSynth2.set(\gate, 0);
 	~pbSynth3.set(\gate, 0);
@@ -23,7 +23,7 @@ OSCdef(\cToD, { arg msg, time, addr, recvPort;
 	}).play;
 
 	//Start D to E Listener
-	~pitchDetCtoD = Synth(\pitchDetective, [
+	~pitchDetDtoE = Synth(\pitchDetective, [
 		\tarFreq: 233, //Bb 3
 		\id, 0
 	]);

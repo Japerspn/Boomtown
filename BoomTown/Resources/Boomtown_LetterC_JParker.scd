@@ -1,4 +1,4 @@
-~joePattern3 = Pbind(//Starts New Pattern
+~joePatternC = Pbind(
 	\instrument, \joeSynthSkip,
 	\bufnum, Pxrand(~justG, inf),
 	\atk, 5,
@@ -25,7 +25,7 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 
 
 	//Start Letter C Pattern
-	~patternPlayer = ~joePattern3.play;
+	~patternPlayer = ~joePatternC.play;
 
 	//Start Slow Chorus
 	t = Task({

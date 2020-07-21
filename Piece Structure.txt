@@ -13,6 +13,7 @@ Idea 1:
   D - Verse
     - melodic fragments II
     - Slow Chorus
+    - Faster lick out
   E - Chorus
     - Repeated Mi/Me Re Do Ti/Te
     - Joe's Pattern: All w/ record skip (maybe dynamic with which notes
@@ -20,8 +21,10 @@ Idea 1:
   F - Bridge
     - G harmonic stuff a la ades
     - Slow Chorus w/ Record Skip
+    - Delay
     - fulcrum pulses
   G - Coda
     - Baroque/ Renaissance style cadential sequence, references melodic
         fragments
+    - Many Delays
     -fulcrum pulses

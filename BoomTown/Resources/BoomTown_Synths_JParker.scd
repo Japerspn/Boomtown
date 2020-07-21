@@ -1,7 +1,11 @@
 SynthDef(\recordBuf, {// records into specified buffer
-	arg bufnum = 0, loop = 1, inbus = 0, outbus = 0;
-	var sig;
+	arg bufnum = 0, loop = 1, inbus = 0, outbus = 0, gate = 1, rel = 10, atk = 5;
+	var sig, env;
+
+	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
+
 	sig = RecordBuf.ar(SoundIn.ar(inbus), bufnum, loop: loop, doneAction: 2);// if loop = 0, buffer does not repeat.
+	sig = sig * env;
 	Out.ar(outbus, sig)
 }).add;
 /*
@@ -64,14 +68,16 @@ SynthDef(\skipBuf, {//plays back a buffer with record skipping effect controlled
 	arg skipDur = -0.5, bufnum, skipDens = 1, gate = 1, atk = 5, rel = 10;
 	var sig, pos, resetPos, env;
 
-
 	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
 
 	resetPos = LocalIn.kr(1).clip(0, BufFrames.kr(bufnum));
 	pos = Phasor.ar(Dust.ar(1), BufRateScale.kr(bufnum), 0, BufFrames.kr(bufnum), resetPos);
 	LocalOut.kr(BufSampleRate.kr(bufnum) * skipDur + pos);
+
 	sig = BufRd.ar(1, bufnum, pos);
 	sig = FreeVerb.ar(sig);
+	sig = LPF.ar(sig, 3000);
+	sig = HPF.ar(sig, 300);
 	sig = sig * env;
 	Out.ar(~wetBus, sig);
 }).add;
@@ -91,6 +97,7 @@ SynthDef(\joeSynth, {//Plays back buffer with an envelope and panning. Designed 
 	sig = FreeVerb.ar(sig, mix, room, damp);
 	sig = sig * amp * env;
 	Out.ar(~droneBus, sig);
+
 }).add;
 /*
 ~joePattern = Pbind(

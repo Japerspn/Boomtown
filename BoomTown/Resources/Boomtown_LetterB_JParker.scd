@@ -1,4 +1,4 @@
-~joePatternB = Pbind(//Starts New Pattern
+~joePatternB = Pbind(
 	\instrument, \joeSynth,
 	\bufnum, Pxrand(~gPent, inf),
 	\atk, 5,
@@ -19,12 +19,10 @@ OSCdef(\aToB, { arg msg, time, addr, recvPort;
 	//Free Letter A Pattern
 	~patternPlayer.stop;
 
-
 	//Start Letter B Pattern
 	~patternPlayer = ~joePatternB.play;
 
 	//Start Delay
-
 	~delay = Synth(\delay, [
 		\inbus: 0,
 		\outbus: ~wetBus,

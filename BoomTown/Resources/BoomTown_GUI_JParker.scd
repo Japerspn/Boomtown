@@ -13,12 +13,12 @@ w = Window("121 Sketch", Rect(
 
 });
 // make an array of all start buttons
-
+~startButtons = [~startButtonA, ~startButtonB, ~startButtonC, ~startButtonD, ~startButtonE, ~startButtonF, ~startButtonG];
 // make an array of all test buttons
 ////test dry, test wet, test drones
 /* control visibility of buttons using this function:
 [~buttonArray].do({|button|
-	button.visible_("false")
+button.visible_("false")
 });
 
 */
@@ -118,8 +118,8 @@ w = Window("121 Sketch", Rect(
 	}).play;
 
 	//Start D to E Listener
-	~pitchDetCtoD = Synth(\pitchDetective, [
-		\tarFreq: 196, //G 3
+	~pitchDetDtoE = Synth(\pitchDetective, [
+		\tarFreq: 233, //Bb
 		\id, 0
 	]);
 
@@ -127,9 +127,130 @@ w = Window("121 Sketch", Rect(
 	OSCdef(\dToE).enable;
 });
 
+~startButtonE = Button(w, Rect(210, 10, 40, 40))//Letter A
+.states_([["Letter E", Color.green, Color.black]])
+.action_({
+	"Letter E".postln;
+	~outSynthSetup.value;
+
+	//Start Letter E Pattern
+	~patternPlayer = ~joePatternE.play;
+
+	//Start Delay
+	~delay = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 0.5,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.5,
+		\room: 0.9,
+	]);
+
+	//Start E to F Listener
+	~pitchDetEtoF = Synth(\pitchDetective, [
+		\tarFreq: 196, //Bb 3
+		\id, 0
+	]);
+
+	//Start E to F OSC def
+	OSCdef(\eToF).enable;
+});
+
+~startButtonF = Button(w, Rect(260, 10, 40, 40))//Letter A
+.states_([["Letter F", Color.green, Color.black]])
+.action_({
+	"Letter F".postln;
+	~outSynthSetup.value;
+
+	//Start Delay
+	~delay = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 0.5,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.5,
+		\room: 0.9,
+	]);
+
+	//Start Slow Chorus w/ Skip
+	t = Task({
+		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
+		0.1.wait;
+		~pbSynth1 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 1, \skipDur: -0.5]);
+		0.3.wait;
+		~pbSynth2 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 1.5, \skipDur: -0.3]);
+		0.3.wait;
+		~pbSynth3 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 2, \skipDur: -0.2]);
+	}).play;
+
+	//Start F to G Listener
+	~pitchDetEtoF = Synth(\pitchDetective, [
+		\tarFreq: 196, //Bb 3
+		\id, 0
+	]);
+
+	//Start F to G OSC def
+	OSCdef(\fToG).enable;
+});
+
+~startButtonG = Button(w, Rect(310, 10, 40, 40))//Letter A
+.states_([["Letter G", Color.green, Color.black]])
+.action_({
+	"Letter G".postln;
+	~outSynthSetup.value;
+
+	//Start Delays
+	~delay = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 0.5,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.5,
+		\room: 0.9,
+	]);
+
+	~delay1 = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 0.5,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.5,
+		\room: 0.9,
+	]);
+
+	~delay2 = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 1,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.6,
+		\room: 0.9,
+	]);
+
+	~delay3 = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 2,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.7,
+		\room: 0.9,
+	]);
+});
+
+
+
+
+
+
 ~stopButton = Button(w, Rect(10,100,40,40))//Stop Button
 .states_([["STOP", Color.green, Color.black]])
-.visible_("false")
+//.visible_("false")
 .action_({
 	s.freeAll;
 	if(~patternPlayer.isPlaying, {~patternPlayer.stop});
@@ -138,7 +259,9 @@ w = Window("121 Sketch", Rect(
 	OSCdef(\aToB).disable;
 	OSCdef(\bToC).disable;
 	OSCdef(\cToD).disable;
-
+	OSCdef(\dToE).disable;
+	OSCdef(\eToF).disable;
+	OSCdef(\fToG).disable;
 
 });
 
@@ -160,12 +283,6 @@ w = Window("121 Sketch", Rect(
 		{
 			"output Synths are on".postln;
 			~outSynthSetup.value;
-
-			~startButtonA.visible_("false");
-			~startButtonB.visible_("false");
-			~startButtonC.visible_("false");
-			~recordButton.visible_("false");
-
 		}, {
 			"output Synths are off".postln;
 			~outSynthSetup.value;
