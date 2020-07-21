@@ -39,6 +39,8 @@ s.waitForBoot({
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterA_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterB_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterC_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterD_JParker.scd", "r").readAllString.interpret;
+
 
 });
 

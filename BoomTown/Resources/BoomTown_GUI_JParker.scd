@@ -38,13 +38,6 @@ w = Window("121 Sketch", Rect(
 	//enable Listener OSC func
 	OSCdef(\aToB).enable;
 
-
-	~stopButton.visible_("true");
-	~liveButton.visible_("false");
-
-	~startButtonA.visible_("false");
-	~startButtonB.visible_("false");
-	~startButtonC.visible_("false");
 });
 
 ~startButtonB = Button(w, Rect(60, 10, 40, 40))//Letter A
@@ -75,12 +68,6 @@ w = Window("121 Sketch", Rect(
 	//enable Listener OSC func
 	OSCdef(\bToC).enable;
 
-	~stopButton.visible_("true");
-	~liveButton.visible_("false");
-
-	~startButtonA.visible_("false");
-	~startButtonB.visible_("false");
-	~startButtonC.visible_("false");
 });
 
 ~startButtonC = Button(w, Rect(110, 10, 40, 40))//Letter A
@@ -89,7 +76,6 @@ w = Window("121 Sketch", Rect(
 	"Letter C".postln;
 	~outSynthSetup.value;
 
-
 	//Start Letter C Pattern
 	~patternPlayer = ~joePattern3.play;
 
@@ -97,31 +83,48 @@ w = Window("121 Sketch", Rect(
 	t = Task({
 		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
 		1.wait;
-		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.8, \mix: 0.6, \room: 0.75]);
+		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.9, \mix: 0.6, \room: 0.75]);
 		0.3.wait;
-		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);
+		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.925, \mix: 0.45, \room: 0.6]);
 		0.3.wait;
 		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95]);
 	}).play;
 
 	//Start C to D Listener
 	~pitchDetCtoD = Synth(\pitchDetective, [
-		\tarFreq: 233, //Bb 3
+		\tarFreq: 196, //G 3
 		\id, 0
 	]);
 
 	//Start C to D OSC def
 	OSCdef(\cToD).enable;
+});
 
+~startButtonD = Button(w, Rect(160, 10, 40, 40))//Letter A
+.states_([["Letter D", Color.green, Color.black]])
+.action_({
+	"Letter D".postln;
+	~outSynthSetup.value;
 
-	~stopButton.visible_("true");
-	~liveButton.visible_("false");
+	//Start Slow Chorus
+	t = Task({
+		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
+		1.wait;
+		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.9, \mix: 0.6, \room: 0.75]);
+		0.3.wait;
+		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.925, \mix: 0.45, \room: 0.6]);
+		0.3.wait;
+		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95]);
+	}).play;
 
-	~startButtonA.visible_("false");
-	~startButtonB.visible_("false");
-	~startButtonC.visible_("false");
+	//Start D to E Listener
+	~pitchDetCtoD = Synth(\pitchDetective, [
+		\tarFreq: 196, //G 3
+		\id, 0
+	]);
 
-
+	//Start D to E OSC def
+	OSCdef(\dToE).enable;
 });
 
 ~stopButton = Button(w, Rect(10,100,40,40))//Stop Button
@@ -132,15 +135,10 @@ w = Window("121 Sketch", Rect(
 	if(~patternPlayer.isPlaying, {~patternPlayer.stop});
 	if(t.isPlaying, {t.stop});
 
-	~stopButton.visible_("false");
-	~liveButton.visible_("false");
-
-	~startButtonA.visible_("true");
-	~startButtonB.visible_("true");
-	~startButtonC.visible_("true");
-
 	OSCdef(\aToB).disable;
 	OSCdef(\bToC).disable;
+	OSCdef(\cToD).disable;
+
 
 });
 

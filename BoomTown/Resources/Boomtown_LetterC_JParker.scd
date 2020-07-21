@@ -1,5 +1,5 @@
 ~joePattern3 = Pbind(//Starts New Pattern
-	\instrument, \joeSynth,
+	\instrument, \joeSynthSkip,
 	\bufnum, Pxrand(~justG, inf),
 	\atk, 5,
 	\sus, 5,
@@ -7,7 +7,8 @@
 	\dur, 3,
 	\mix, 0.4,
 	\room, 0.5,
-	\outbus, ~droneBus
+	\outbus, ~droneBus,
+	\addAction, \addToHead
 );
 
 OSCdef(\bToC, { arg msg, time, addr, recvPort;
@@ -21,6 +22,8 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 
 	//Free Delay Synth
 	~delay.set(\gate, 0);
+
+
 	//Start Letter C Pattern
 	~patternPlayer = ~joePattern3.play;
 
@@ -37,7 +40,7 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 
 	//Start C to D Listener
 	~pitchDetCtoD = Synth(\pitchDetective, [
-		\tarFreq: 233, //Bb 3
+		\tarFreq: 196, //G 3
 		\id, 0
 	]);
 
@@ -50,3 +53,17 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 }, \tr);
 
 OSCdef(\bToC).disable
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,7 +7,8 @@
 	\dur, 3,
 	\mix, 0.8,
 	\room, 0.86,
-	\outbus, ~droneBus
+	\outbus, ~droneBus,
+	\addAction, \addToHead
 );
 
 OSCdef(\aToB, { arg msg, time, addr, recvPort;

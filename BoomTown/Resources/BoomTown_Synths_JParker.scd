@@ -10,11 +10,19 @@ SynthDef(\recordBuf, {// records into specified buffer
 
 
 SynthDef(\playbackBuf, {// plays specified buffer w/ reverb
-	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5;
-	var sig;
+	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5, gate = 1, atk = 5, rel = 10;
+	var sig, env;
+
+	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
+
+
 	sig = PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum) * rate, loop: loop, doneAction: 2);
 	sig = PitchShift.ar(sig, pitchRatio: rate.reciprocal);
+	sig = LPF.ar(sig, 3000);
+	sig = HPF.ar(sig, 300);
 	sig = FreeVerb.ar(sig, mix, room);
+	sig = sig * env;
+
 	Out.ar(~wetBus, sig);
 }).add;
 /*
@@ -53,13 +61,18 @@ SynthDef(\delay, {
 
 
 SynthDef(\skipBuf, {//plays back a buffer with record skipping effect controlled by dust.
-	arg skipDur = -0.5, bufnum, skipDens = 1;
-	var sig, pos, resetPos;
+	arg skipDur = -0.5, bufnum, skipDens = 1, gate = 1, atk = 5, rel = 10;
+	var sig, pos, resetPos, env;
+
+
+	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
+
 	resetPos = LocalIn.kr(1).clip(0, BufFrames.kr(bufnum));
 	pos = Phasor.ar(Dust.ar(1), BufRateScale.kr(bufnum), 0, BufFrames.kr(bufnum), resetPos);
 	LocalOut.kr(BufSampleRate.kr(bufnum) * skipDur + pos);
 	sig = BufRd.ar(1, bufnum, pos);
 	sig = FreeVerb.ar(sig);
+	sig = sig * env;
 	Out.ar(~wetBus, sig);
 }).add;
 /*
