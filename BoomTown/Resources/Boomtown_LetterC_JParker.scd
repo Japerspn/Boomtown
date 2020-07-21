@@ -6,7 +6,8 @@
 	\rel, 5,
 	\dur, 3,
 	\mix, 0.4,
-	\room, 0.5
+	\room, 0.5,
+	\outbus, ~droneBus
 );
 
 OSCdef(\bToC, { arg msg, time, addr, recvPort;
@@ -18,6 +19,8 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 	//Free Letter B Pattern
 	~patternPlayer.stop;
 
+	//Free Delay Synth
+	~delay.set(\gate, 0);
 	//Start Letter C Pattern
 	~patternPlayer = ~joePattern3.play;
 
@@ -25,11 +28,11 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 	t = Task({
 		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
 		1.wait;
-		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.8, \mix: 0.6, \room: 0.75]);
+		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.8, \mix: 0.6, \room: 0.75, \outbus, ~wetBus]);
 		0.3.wait;
-		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);
+		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6, \outbus, ~wetBus]);
 		0.3.wait;
-		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95]);
+		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95, \outbus, ~wetBus]);
 	}).play;
 
 	//Start C to D Listener

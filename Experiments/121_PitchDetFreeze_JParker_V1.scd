@@ -15,10 +15,10 @@ SynthDef(\record, {
 	RecordBuf.ar(SoundIn.ar(0), bufnum, loop: 0, doneAction: 2);
 }).add;
 
-SynthDef(\dry, {
-	arg amp = 1, thresh = 0.9;
+SynthDef(\outSynth, {
+	arg amp = 1, thresh = 0.9, inbus = 0;
 	var sig;
-	sig = SoundIn.ar;
+	sig = SoundIn.ar(inbus);
 	sig = Pan2.ar(sig, 0);
 	sig = sig * amp;
 	sig = Compander.ar(

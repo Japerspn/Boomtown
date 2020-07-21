@@ -6,5 +6,11 @@
 	\rel, 5,
 	\dur, 3,
 	\mix, 0.5,
-	\room, 0.66
+	\room, 0.66,
+	\outbus, ~droneBus,
+	\addAction, \addToHead
 );
+
+
+
+

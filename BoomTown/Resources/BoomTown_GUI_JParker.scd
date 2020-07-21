@@ -12,12 +12,21 @@ w = Window("121 Sketch", Rect(
 	s.freeAll
 
 });
+// make an array of all start buttons
 
+// make an array of all test buttons
+////test dry, test wet, test drones
+/* control visibility of buttons using this function:
+[~buttonArray].do({|button|
+	button.visible_("false")
+});
+
+*/
 ~startButtonA = Button(w, Rect(10, 10, 40, 40))//Letter A
 .states_([["Letter A", Color.green, Color.black]])
 .action_({
 	"Letter A".postln;
-
+	~outSynthSetup.value;
 	//start G+D Pattern
 	~patternPlayer = ~joePatternA.play;
 
@@ -31,6 +40,7 @@ w = Window("121 Sketch", Rect(
 
 
 	~stopButton.visible_("true");
+	~liveButton.visible_("false");
 
 	~startButtonA.visible_("false");
 	~startButtonB.visible_("false");
@@ -41,9 +51,21 @@ w = Window("121 Sketch", Rect(
 .states_([["Letter B", Color.green, Color.black]])
 .action_({
 	"Letter B".postln;
+	~outSynthSetup.value;
 
 	//start Letter B Pattern
 	~patternPlayer = ~joePatternB.play;
+
+	//start Delay
+	~delay = Synth(\delay, [
+		\inbus: 0,
+		\outbus: 0,
+		\del: 0.5,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.5,
+		\room: 0.9,
+	]);
 
 	//start Listener
 	~pitchDetBtoC = Synth(\pitchDetective, [
@@ -54,6 +76,7 @@ w = Window("121 Sketch", Rect(
 	OSCdef(\bToC).enable;
 
 	~stopButton.visible_("true");
+	~liveButton.visible_("false");
 
 	~startButtonA.visible_("false");
 	~startButtonB.visible_("false");
@@ -64,6 +87,9 @@ w = Window("121 Sketch", Rect(
 .states_([["Letter C", Color.green, Color.black]])
 .action_({
 	"Letter C".postln;
+	~outSynthSetup.value;
+
+
 	//Start Letter C Pattern
 	~patternPlayer = ~joePattern3.play;
 
@@ -89,6 +115,7 @@ w = Window("121 Sketch", Rect(
 
 
 	~stopButton.visible_("true");
+	~liveButton.visible_("false");
 
 	~startButtonA.visible_("false");
 	~startButtonB.visible_("false");
@@ -106,6 +133,7 @@ w = Window("121 Sketch", Rect(
 	if(t.isPlaying, {t.stop});
 
 	~stopButton.visible_("false");
+	~liveButton.visible_("false");
 
 	~startButtonA.visible_("true");
 	~startButtonB.visible_("true");
@@ -127,10 +155,27 @@ w = Window("121 Sketch", Rect(
 		}
 )});
 
+~liveButton = Button(w, Rect(140, 150, 100, 40))
+.states_([["Test Levels", Color.green, Color.black],["End Test", Color.red, Color.black]])
+.action_({|view|
+	if(view.value == 1,
+		{
+			"output Synths are on".postln;
+			~outSynthSetup.value;
+
+			~startButtonA.visible_("false");
+			~startButtonB.visible_("false");
+			~startButtonC.visible_("false");
+			~recordButton.visible_("false");
+
+		}, {
+			"output Synths are off".postln;
+			~outSynthSetup.value;
+		}
+)});
+
 
 s.plotTree;
-
-
 
 
 /*~pitchShiftButton = Button(w, Rect(40,250, 160, 40))

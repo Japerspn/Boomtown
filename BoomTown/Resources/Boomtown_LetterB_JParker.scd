@@ -6,7 +6,8 @@
 	\rel, 5,
 	\dur, 3,
 	\mix, 0.8,
-	\room, 0.86
+	\room, 0.86,
+	\outbus, ~droneBus
 );
 
 OSCdef(\aToB, { arg msg, time, addr, recvPort;
@@ -17,8 +18,22 @@ OSCdef(\aToB, { arg msg, time, addr, recvPort;
 	//Free Letter A Pattern
 	~patternPlayer.stop;
 
+
 	//Start Letter B Pattern
 	~patternPlayer = ~joePatternB.play;
+
+	//Start Delay
+
+	~delay = Synth(\delay, [
+		\inbus: 0,
+		\outbus: ~wetBus,
+		\del: 0.5,
+		\rel: 10,
+		\atk: 10,
+		\mix: 0.5,
+		\room: 0.9,
+	]);
+
 
 	//Start B to C Listener
 	~pitchDetBtoC = Synth(\pitchDetective, [

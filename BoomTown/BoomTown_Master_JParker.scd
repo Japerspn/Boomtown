@@ -4,6 +4,9 @@ s.waitForBoot({
 	~bufArrayBig = Array.fill(10, {Buffer.alloc(s, s.sampleRate * 10, 1)});// Array of 10 10 second buffers
 	~busArray1ch = Array.fill(10, {Bus.audio(s, 1)});// Array of ten one channel audio buses
 	~busArray2ch = Array.fill(10, {Bus.audio(s, 2)});// Array of ten two channel audio buses
+	~droneBus = Bus.audio(s, 2);
+	~dryBus = Bus.audio(s, 2);
+	~wetBus = Bus.audio(s, 2);
 
 	~g3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone12 (G3)_JParker_V2.wav");
 	~beef3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone07 (Bb3)_JParker_V2.wav");
@@ -51,8 +54,3 @@ if(s.serverRunning, {
 })
 
 );
-
-
-
-
-
