@@ -1,19 +1,24 @@
+~blueDark = Color.fromHexString("#2D5670");
+~blueMid = Color.fromHexString("#106AA3");
+~blueLight = Color.fromHexString("#00D6B6");
+~redDark = Color.fromHexString("#A31010");
+~redLight = Color.fromHexString("#D84F37");
 
 Window.closeAll;
 w = Window("121 Sketch", Rect(
-	left: Window.screenBounds.width/2-(580/2),
-	top: Window.screenBounds.height/2-(310/2),
-	width: 580,
-	height: 310))
+	left: Window.screenBounds.width/2-(640/2),
+	top: Window.screenBounds.height/2-(400/2),
+	width: 640,
+	height: 400))
 .front
 .alwaysOnTop_(true)
-.background_(Color.cyan(0.4, 1))
+.background_(~blueDark)
 .onClose_({
 	s.freeAll
 
 });
 // make an array of all start buttons
-~startButtons = [~startButtonA, ~startButtonB, ~startButtonC, ~startButtonD, ~startButtonE, ~startButtonF, ~startButtonG];
+//~notStopButtons = [~startButtonA, ~startButtonB, ~startButtonC, ~startButtonD, ~startButtonE, ~startButtonF, ~startButtonG, ~testButton, ~recordButton];
 // make an array of all test buttons
 ////test dry, test wet, test drones
 /* control visibility of buttons using this function:
@@ -22,10 +27,12 @@ button.visible_("false")
 });
 
 */
-~startButtonA = Button(w, Rect(10, 10, 40, 40))//Letter A
-.states_([["Letter A", Color.green, Color.black]])
+
+~startButtonA = Button(w, Rect(10, 310, 80, 80))//Letter A
 .action_({
 	"Letter A".postln;
+	~currentLetter.string_("A");
+
 	~outSynthSetup.value;
 	//start G+D Pattern
 	~patternPlayer = ~joePatternA.play;
@@ -38,12 +45,15 @@ button.visible_("false")
 	//enable Listener OSC func
 	OSCdef(\aToB).enable;
 
+	~startButtonGuiFunc.value
+
 });
 
-~startButtonB = Button(w, Rect(60, 10, 40, 40))//Letter A
-.states_([["Letter B", Color.green, Color.black]])
+~startButtonB = Button(w, Rect(100, 310, 80, 80))//Letter B
 .action_({
 	"Letter B".postln;
+	~currentLetter.string_("B");
+
 	~outSynthSetup.value;
 
 	//start Letter B Pattern
@@ -68,12 +78,15 @@ button.visible_("false")
 	//enable Listener OSC func
 	OSCdef(\bToC).enable;
 
+	~startButtonGuiFunc.value
+
 });
 
-~startButtonC = Button(w, Rect(110, 10, 40, 40))//Letter A
-.states_([["Letter C", Color.green, Color.black]])
+~startButtonC = Button(w, Rect(190, 310, 80, 80))//Letter C
 .action_({
 	"Letter C".postln;
+	~currentLetter.string_("C");
+
 	~outSynthSetup.value;
 
 	//Start Letter C Pattern
@@ -98,12 +111,16 @@ button.visible_("false")
 
 	//Start C to D OSC def
 	OSCdef(\cToD).enable;
+
+	~startButtonGuiFunc.value
+
 });
 
-~startButtonD = Button(w, Rect(160, 10, 40, 40))//Letter A
-.states_([["Letter D", Color.green, Color.black]])
+~startButtonD = Button(w, Rect(280, 310, 80, 80))//Letter D
 .action_({
 	"Letter D".postln;
+	~currentLetter.string_("D");
+
 	~outSynthSetup.value;
 
 	//Start Slow Chorus
@@ -125,12 +142,16 @@ button.visible_("false")
 
 	//Start D to E OSC def
 	OSCdef(\dToE).enable;
+
+	~startButtonGuiFunc.value
+
 });
 
-~startButtonE = Button(w, Rect(210, 10, 40, 40))//Letter A
-.states_([["Letter E", Color.green, Color.black]])
+~startButtonE = Button(w, Rect(370, 310, 80, 80))//Letter E
 .action_({
 	"Letter E".postln;
+	~currentLetter.string_("E");
+
 	~outSynthSetup.value;
 
 	//Start Letter E Pattern
@@ -155,12 +176,16 @@ button.visible_("false")
 
 	//Start E to F OSC def
 	OSCdef(\eToF).enable;
+
+	~startButtonGuiFunc.value
+
 });
 
-~startButtonF = Button(w, Rect(260, 10, 40, 40))//Letter A
-.states_([["Letter F", Color.green, Color.black]])
+~startButtonF = Button(w, Rect(460, 310, 80, 80))//Letter A
 .action_({
 	"Letter F".postln;
+	~currentLetter.string_("F");
+
 	~outSynthSetup.value;
 
 	//Start Delay
@@ -193,12 +218,16 @@ button.visible_("false")
 
 	//Start F to G OSC def
 	OSCdef(\fToG).enable;
+
+	~startButtonGuiFunc.value
+
 });
 
-~startButtonG = Button(w, Rect(310, 10, 40, 40))//Letter A
-.states_([["Letter G", Color.green, Color.black]])
+~startButtonG = Button(w, Rect(550, 310, 80, 80))//Letter G
 .action_({
 	"Letter G".postln;
+	~currentLetter.string_("G");
+
 	~outSynthSetup.value;
 
 	//Start Delays
@@ -241,20 +270,19 @@ button.visible_("false")
 		\mix: 0.7,
 		\room: 0.9,
 	]);
+
+	~startButtonGuiFunc.value
+
 });
 
-
-
-
-
-
-~stopButton = Button(w, Rect(10,100,40,40))//Stop Button
-.states_([["STOP", Color.green, Color.black]])
-//.visible_("false")
+~stopButton = Button(w, Rect(210,110,100,100))//Stop Button
+.visible_("false")
 .action_({
 	s.freeAll;
 	if(~patternPlayer.isPlaying, {~patternPlayer.stop});
 	if(t.isPlaying, {t.stop});
+
+	~currentLetter.string_("");
 
 	OSCdef(\aToB).disable;
 	OSCdef(\bToC).disable;
@@ -263,94 +291,128 @@ button.visible_("false")
 	OSCdef(\eToF).disable;
 	OSCdef(\fToG).disable;
 
+	~stopButtonGuiFunc.value;
+
 });
 
-~recordButton = Button(w, Rect(240, 150, 100, 40))
-.states_([["RECORD", Color.green, Color.black],["Stop", Color.red, Color.black]])
+~recordButton = Button(w, Rect(180, 240, 160, 40))
 .action_({|view|
 	if(view.value == 1,
 		{"It's on!".postln;
-			s.record(thisProcess.nowExecutingPath.dirname.dirname +/+ "Recordings" +/+ "Rec" + Date.localtime + ".wav");
+			s.record;
 		}, {
 			s.stopRecording
 		}
 )});
 
-~liveButton = Button(w, Rect(140, 150, 100, 40))
-.states_([["Test Levels", Color.green, Color.black],["End Test", Color.red, Color.black]])
+~testButton = Button(w, Rect(10, 240, 160, 40))
 .action_({|view|
 	if(view.value == 1,
 		{
 			"output Synths are on".postln;
 			~outSynthSetup.value;
+			~startButtons.do({|button|
+				button.visible_("false")
+			});
 		}, {
 			"output Synths are off".postln;
 			~outSynthSetup.value;
+			~startButtons.do({|button|
+				button.visible_("true")
+			});
 		}
 )});
 
+~dryText = StaticText(w, Rect(10, 10, 3200, 40))
+.string_("B O O M T O W N")
+.stringColor_(Color.black)
+.font_(Font("Avant Garde", 40, "true"));
 
-s.plotTree;
+~currentLetterText = StaticText(w, Rect(10, 60, 150, 20))
+.string_("Current Letter:")
+.stringColor_(Color.black)
+.font_(Font("Avant Garde", 20, true));
+
+~currentLetter = StaticText(w, Rect(40, 80, 150, 150))
+.string_("")
+.stringColor_(Color.black)
+.font_(Font("default", 150, true));
+
+~dryText = StaticText(w, Rect(350, 30, 40, 20))
+.string_("Dry")
+.stringColor_(Color.black);
+
+~dryOutSlider = Slider(w, Rect(350, 50, 40, 230))
+.value_(0.5)
+.action_({
+	arg obj;
+	if(~dryOut.isRunning, {~dryOut.set(\amp, obj.value * 2)});
+});
+
+~wetText = StaticText(w, Rect(410, 30, 40, 20))
+.string_("Wet")
+.stringColor_(Color.black);
+
+~wetOutSlider = Slider(w, Rect(410, 50, 40, 230))
+.value_(0.5)
+.action_({
+	arg obj;
+	if(~wetOut.isRunning, {~wetOut.set(\amp, obj.value * 2)});
+});
+
+~droneText = StaticText(w, Rect(460, 30, 60, 20))
+.string_("Drone")
+.stringColor_(Color.black);
+
+~droneOutSlider = Slider(w, Rect(470, 50, 40, 230))
+.value_(0.5)
+.action_({
+	arg obj;
+	if(~droneOut.isRunning, {~droneOut.set(\amp, obj.value * 2)});
+});
+
+~meters = ServerMeterView(s, w, 520@50, 1, 2);
+
+//DESIGN ELEMENTS
 
 
-/*~pitchShiftButton = Button(w, Rect(40,250, 160, 40))
-.states_([["Weird Pitch Shifter Thing", Color.green, Color.black],["Stop", Color.red, Color.black]])
-.action_({|view|
-if(view.value == 1,
-{"It's on!".postln;
-~pitchSynth =
-Synth(\pitchShifter, [
-\inbus: 0,
-\outFreq: 43.midicps,
-//\delTime: rrand(0.0, 0.5)
-\delTime: 0
-], addAction: 'addToTail')
+~sliderLabels = [~wetText, ~dryText, ~droneText];
 
-}, {
-"It's off".postln;
-~pitchSynth.free
-}
-)});
+~sliderLabels.do({|button, index|
+	button.font_(Font("Avant Garde", size:20));
+});
 
-~layersButton = Button(w, Rect(240,250, 160, 40))
-.states_([["Layers", Color.green, Color.black],["Stop", Color.red, Color.black]])
-.action_({|view|
-if(view.value == 1,
-{"It's on!".postln;
-t = Task({
-~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
-3.wait;
-~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.8, \mix: 0.6, \room: 0.75]);
-~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);
-~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95]);
-}).play;
-}, {
-"It's off".postln;
-~recSynth.free;
-~pbSynth1.free;
-~pbSynth2.free;
-~pbSynth3.free;
-}
-)});
+~testButton.states_([["Test Levels", ~redDark, Color.black],["End Test", ~redLight, Color.black]])
+.font_(Font("Avant Garde", size:20));
+
+~recordButton.states_([["RECORD", ~redDark, Color.black],["Stop Recording", ~redLight, Color.black]])
+.font_(Font("Avant Garde", size:20));
 
 
-~skipSynthButton = Button(w, Rect(440, 250, 100, 40))
-.states_([["Layers w/ skip", Color.green, Color.black],["Stop", Color.red, Color.black]])
-.action_({|view|
-if(view.value == 1,
-{"It's on!".postln;
-t = Task({
-~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
-~skipSynth1 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \skipDens: 0.5, \skipDur: -0.2]);
-~skipSynth2 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \skipDens: 0.5, \skipDur: -0.2]);
-~skipSynth3 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \skipDens: 0.5, \skipDur: -0.2]);
+~startButtons = [~startButtonA, ~startButtonB, ~startButtonC, ~startButtonD, ~startButtonE, ~startButtonF, ~startButtonG];
+~strings = ["A", "B", "C", "D", "E", "F", "G"];
 
-}).play;
-}, {
-"It's off".postln;
-~recSynth.free;
-~skipSynth1.free;
-~skipSynth2.free;
-~skipSynth3.free;
-}
-)});*/
+~startButtons.do({|button, index|
+	button.font_(Font("Avant Garde", size:20));
+	button.states_([[~strings[index], ~blueLight, Color.black]])
+
+});
+
+~stopButton.states_([["STOP", ~redDark, Color.black]])
+.font_(Font("Avant Garde", size:20));
+
+~notStopButtons = ~startButtons ++ [~testButton, ~recordButton];
+
+~startButtonGuiFunc = {
+	~notStopButtons.do({|button|
+		button.visible_("false")
+	});
+	~stopButton.visible_("true");
+};
+
+~stopButtonGuiFunc = {
+	~notStopButtons.do({|button|
+		button.visible_("tru")
+	});
+	~stopButton.visible_("false");
+};

@@ -13,6 +13,7 @@
 
 OSCdef(\dToE, { arg msg, time, addr, recvPort;
 	"Letter E".postln;
+	{~currentLetter.string_("E")}.defer;
 
 	//Free D to E detector synth
 	~pitchDetDtoE.free;

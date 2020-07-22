@@ -1,5 +1,6 @@
 OSCdef(\eToF, { arg msg, time, addr, recvPort;
 	"Letter F".postln;
+	{~currentLetter.string_("F")}.defer;
 
 	//Free D to E detector synth
 	~pitchDetEtoF.free;

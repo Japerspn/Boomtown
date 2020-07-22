@@ -1,5 +1,6 @@
 OSCdef(\fToG, { arg msg, time, addr, recvPort;
-	"Letter F".postln;
+	"Letter G".postln;
+	{~currentLetter.string_("G")}.defer;
 
 	//Free F to G detector synth
 	~pitchDetFtoG.free;

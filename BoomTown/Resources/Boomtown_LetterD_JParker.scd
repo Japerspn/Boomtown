@@ -1,5 +1,6 @@
 OSCdef(\cToD, { arg msg, time, addr, recvPort;
 	"Letter D".postln;
+	{~currentLetter.string_("D")}.defer;
 
 	//Free C to D detector synth
 	~pitchDetCtoD.free;

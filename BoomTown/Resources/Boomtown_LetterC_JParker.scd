@@ -13,6 +13,7 @@
 
 OSCdef(\bToC, { arg msg, time, addr, recvPort;
 	"Letter C".postln;
+	{~currentLetter.string_("C")}.defer;
 
 	//Free B to C detector synth
 	~pitchDetBtoC.free;

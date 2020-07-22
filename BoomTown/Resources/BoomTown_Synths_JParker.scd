@@ -27,7 +27,7 @@ SynthDef(\playbackBuf, {// plays specified buffer w/ reverb
 	sig = FreeVerb.ar(sig, mix, room);
 	sig = sig * env;
 
-	Out.ar(~wetBus, sig);
+	Out.ar(~wetBus, sig * 2);
 }).add;
 /*
 ~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);
@@ -44,7 +44,7 @@ SynthDef(\delay, {
 	sig = FreeVerb.ar(sig, mix, room, damp);
 	sig = sig * env;
 
-	Out.ar(~wetBus, sig);
+	Out.ar(~wetBus, sig * 2);
 }).add;
 
 /*
@@ -79,7 +79,7 @@ SynthDef(\skipBuf, {//plays back a buffer with record skipping effect controlled
 	sig = LPF.ar(sig, 3000);
 	sig = HPF.ar(sig, 300);
 	sig = sig * env;
-	Out.ar(~wetBus, sig);
+	Out.ar(~wetBus, sig * 2);
 }).add;
 /*
 
@@ -233,7 +233,7 @@ SynthDef(\dryOutSynth, {
 ~outSynthSetup = {
 	if(~dryOut.isPlaying.not, {
 		~dryOut = Synth(\dryOutSynth, [
-			\amp: 1,
+			\amp: ~dryOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: 0,
 		]).register;
@@ -244,7 +244,7 @@ SynthDef(\dryOutSynth, {
 
 	if(~droneOut.isPlaying.not, {
 		~droneOut = Synth(\outSynth, [
-			\amp: 1,
+			\amp: ~droneOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: ~droneBus,
 		]).register;
@@ -255,7 +255,7 @@ SynthDef(\dryOutSynth, {
 
 	if(~wetOut.isPlaying.not, {
 		~wetOut = Synth(\outSynth, [
-			\amp: 1,
+			\amp: ~wetOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: ~wetBus,
 		]).register;
