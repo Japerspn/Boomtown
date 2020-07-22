@@ -323,10 +323,14 @@ button.visible_("false")
 		}
 )});
 
-~dryText = StaticText(w, Rect(10, 10, 3200, 40))
-.string_("B O O M T O W N")
-.stringColor_(Color.black)
-.font_(Font("Avant Garde", 40, "true"));
+10.do({ |index|
+	var colors = [0.5, 0.4, 0.3, 0.2, 0.1, 0];
+	StaticText(w, Rect(2 + (index), 2 + (index), 3200, 40))
+	.string_("B O O M T O W N")
+	//.stringColor_(Color.gray(colors[index]))
+	.stringColor_(Color.gray(0.7 - (index / 13)))
+	.font_(Font("Avant Garde", 40, "true"));
+});
 
 ~currentLetterText = StaticText(w, Rect(10, 60, 150, 20))
 .string_("Current Letter:")
