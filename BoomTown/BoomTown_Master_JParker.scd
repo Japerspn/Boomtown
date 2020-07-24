@@ -52,8 +52,6 @@ if(s.serverRunning, {
 }, {s.options.memSize_(2.pow(20));
 	s.options.numOutputBusChannels_(4);
 	s.boot;
-
-
 })
 
 );
