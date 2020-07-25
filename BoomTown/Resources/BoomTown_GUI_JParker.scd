@@ -17,16 +17,6 @@ w = Window("121 Sketch", Rect(
 	s.freeAll
 
 });
-// make an array of all start buttons
-//~notStopButtons = [~startButtonA, ~startButtonB, ~startButtonC, ~startButtonD, ~startButtonE, ~startButtonF, ~startButtonG, ~testButton, ~recordButton];
-// make an array of all test buttons
-////test dry, test wet, test drones
-/* control visibility of buttons using this function:
-[~buttonArray].do({|button|
-button.visible_("false")
-});
-
-*/
 
 ~startButtonA = Button(w, Rect(10, 310, 80, 80))//Letter A
 .action_({
@@ -295,15 +285,25 @@ button.visible_("false")
 
 });
 
+~recordPath = (thisProcess.nowExecutingPath.dirname.dirname +/+ "recordings" +/+ "BoomTown_" ++ Date.localtime.stamp +/+ ".aiff");
+
 ~recordButton = Button(w, Rect(180, 240, 160, 40))
 .action_({|view|
 	if(view.value == 1,
 		{"It's on!".postln;
-			s.record;
+			//s.record(~recordPath, 2);
+			s.record();
+			~recordText.visible_("true")
 		}, {
-			s.stopRecording
+			s.stopRecording;
+			~recordText.visible_("false")
 		}
 )});
+
+~recordText = StaticText(w, Rect(10, 290, 620, 20))
+.string_("Recordings can be found here: " ++ thisProcess.platform.recordingsDir.asString)
+.align_(\topLeft)
+.font_(Font("Avant Garde", 12)).visible_("false");
 
 ~testButton = Button(w, Rect(10, 240, 160, 40))
 .action_({|view|
@@ -327,7 +327,6 @@ button.visible_("false")
 	var colors = [0.5, 0.4, 0.3, 0.2, 0.1, 0];
 	StaticText(w, Rect(2 + (index), 2 + (index), 3200, 40))
 	.string_("B O O M T O W N")
-	//.stringColor_(Color.gray(colors[index]))
 	.stringColor_(Color.gray(0.7 - (index / 13)))
 	.font_(Font("Avant Garde", 40, "true"));
 });
@@ -378,7 +377,6 @@ button.visible_("false")
 ~meters = ServerMeterView(s, w, 520@50, 1, 2);
 
 //DESIGN ELEMENTS
-
 
 ~sliderLabels = [~wetText, ~dryText, ~droneText];
 
