@@ -5,7 +5,7 @@
 ~redLight = Color.fromHexString("#D84F37");
 
 Window.closeAll;
-w = Window("121 Sketch", Rect(
+w = Window("Boomtown", Rect(
 	left: Window.screenBounds.width/2-(640/2),
 	top: Window.screenBounds.height/2-(400/2),
 	width: 640,
@@ -282,28 +282,22 @@ w = Window("121 Sketch", Rect(
 	OSCdef(\fToG).disable;
 
 	~stopButtonGuiFunc.value;
+	~recordButton.value = 0;
 
 });
 
-~recordPath = (thisProcess.nowExecutingPath.dirname.dirname +/+ "recordings" +/+ "BoomTown_" ++ Date.localtime.stamp +/+ ".aiff");
+~path = thisProcess.nowExecutingPath.dirname.dirname;
 
 ~recordButton = Button(w, Rect(180, 240, 160, 40))
 .action_({|view|
 	if(view.value == 1,
 		{"It's on!".postln;
-			//s.record(~recordPath, 2);
-			s.record();
-			~recordText.visible_("true")
+			s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav");
+			//s.record();
 		}, {
 			s.stopRecording;
-			~recordText.visible_("false")
 		}
 )});
-
-~recordText = StaticText(w, Rect(10, 290, 620, 20))
-.string_("Recordings can be found here: " ++ thisProcess.platform.recordingsDir.asString)
-.align_(\topLeft)
-.font_(Font("Avant Garde", 12)).visible_("false");
 
 ~testButton = Button(w, Rect(10, 240, 160, 40))
 .action_({|view|
@@ -323,9 +317,17 @@ w = Window("121 Sketch", Rect(
 		}
 )});
 
+~settingsButton = Button(w, Rect(570, 10, 60, 20))
+.font_(Font("Avant Garde", size:12))
+.states_([["settings", ~blueLight, Color.black]])
+.action_({
+	~settingsWindow.value
+
+});
+
 10.do({ |index|
 	var colors = [0.5, 0.4, 0.3, 0.2, 0.1, 0];
-	StaticText(w, Rect(2 + (index), 2 + (index), 3200, 40))
+	StaticText(w, Rect(2 + (index), 2 + (index), 400, 40))
 	.string_("B O O M T O W N")
 	.stringColor_(Color.gray(0.7 - (index / 13)))
 	.font_(Font("Avant Garde", 40, "true"));
@@ -403,7 +405,7 @@ w = Window("121 Sketch", Rect(
 ~stopButton.states_([["STOP", ~redDark, Color.black]])
 .font_(Font("Avant Garde", size:20));
 
-~notStopButtons = ~startButtons ++ [~testButton, ~recordButton];
+~notStopButtons = ~startButtons ++ [~testButton, ~recordButton, ~settingsButton];
 
 ~startButtonGuiFunc = {
 	~notStopButtons.do({|button|

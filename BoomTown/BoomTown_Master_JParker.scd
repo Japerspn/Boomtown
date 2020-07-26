@@ -8,7 +8,7 @@ s.waitForBoot({
 	~dryBus = Bus.audio(s, 2);
 	~wetBus = Bus.audio(s, 2);
 
-	~g3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone12 (G3)_JParker_V2.wav");
+	~g3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone12 (G3)_JParker_V2.wav".resolveRelative);
 	~beef3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone07 (Bb3)_JParker_V2.wav");
 	~c4 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone04 (C4)_JParker_V2.wav");
 	~g4 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone03 (G4)_JParker_V2.wav");
@@ -42,6 +42,7 @@ s.waitForBoot({
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterD_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterE_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterF_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "/BoomTown_SettingsWindow_JParker.scd", "r").readAllString.interpret;
 
 
 });
