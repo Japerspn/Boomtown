@@ -202,7 +202,7 @@ w = Window("Boomtown", Rect(
 
 	//Start F to G Listener
 	~pitchDetEtoF = Synth(\pitchDetective, [
-		\tarFreq: 196, //Bb 3
+		\tarFreq: 220, //A3
 		\id, 0
 	]);
 
