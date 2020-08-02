@@ -21,7 +21,7 @@ OSCdef(\eToF, { arg msg, time, addr, recvPort;
 
 	//Start E to F Listener
 	~pitchDetFtoG = Synth(\pitchDetective, [
-		\tarFreq: 220, //A 3
+		\tarFreq: 196, //G 3
 		\id, 0
 	]);
 

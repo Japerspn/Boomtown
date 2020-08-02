@@ -42,8 +42,6 @@ s.waitForBoot({
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterD_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterE_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterF_JParker.scd", "r").readAllString.interpret;
-	File(thisProcess.nowExecutingPath.dirname +/+ "/BoomTown_SettingsWindow_JParker.scd", "r").readAllString.interpret;
-
 
 });
 
@@ -54,8 +52,6 @@ if(s.serverRunning, {
 }, {s.options.memSize_(2.pow(20));
 	s.options.numOutputBusChannels_(4);
 	s.boot;
-
-
 })
 
 );

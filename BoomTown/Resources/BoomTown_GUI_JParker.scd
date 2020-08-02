@@ -160,7 +160,7 @@ w = Window("Boomtown", Rect(
 
 	//Start E to F Listener
 	~pitchDetEtoF = Synth(\pitchDetective, [
-		\tarFreq: 196, //Bb 3
+		\tarFreq: 196, //G 3
 		\id, 0
 	]);
 
@@ -316,14 +316,6 @@ w = Window("Boomtown", Rect(
 			});
 		}
 )});
-
-~settingsButton = Button(w, Rect(570, 10, 60, 20))
-.font_(Font("Avant Garde", size:12))
-.states_([["settings", ~blueLight, Color.black]])
-.action_({
-	~settingsWindow.value
-
-});
 
 10.do({ |index|
 	var colors = [0.5, 0.4, 0.3, 0.2, 0.1, 0];
