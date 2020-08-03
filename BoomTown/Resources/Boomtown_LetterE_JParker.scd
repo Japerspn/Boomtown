@@ -12,8 +12,6 @@
 );
 
 OSCdef(\dToE, { arg msg, time, addr, recvPort;
-	"Letter E".postln;
-	{~currentLetter.string_("E")}.defer;
 
 	//Free D to E detector synth
 	~pitchDetDtoE.free;
@@ -23,6 +21,21 @@ OSCdef(\dToE, { arg msg, time, addr, recvPort;
 	~pbSynth1.set(\gate, 0);
 	~pbSynth2.set(\gate, 0);
 	~pbSynth3.set(\gate, 0);
+
+	~letterEFunc.value;
+
+	~eToFListener.value;
+
+	// disable D to E OSCdef
+	OSCdef(\dToE).disable;
+
+}, \tr);
+
+OSCdef(\dToE).disable;
+
+~letterEFunc = {
+	"Letter E".postln;
+	{~currentLetter.string_("E")}.defer;
 
 	//Start Letter E Pattern
 	~patternPlayer = ~joePatternE.play;
@@ -37,7 +50,9 @@ OSCdef(\dToE, { arg msg, time, addr, recvPort;
 		\mix: 0.5,
 		\room: 0.9,
 	]);
+};
 
+~eToFListener = {
 	//Start E to F Listener
 	~pitchDetEtoF = Synth(\pitchDetective, [
 		\tarFreq: 196, //G 3
@@ -46,13 +61,7 @@ OSCdef(\dToE, { arg msg, time, addr, recvPort;
 
 	//Start E to F OSC def
 	OSCdef(\eToF).enable;
-
-	// disable D to E OSCdef
-	OSCdef(\dToE).disable;
-
-}, \tr);
-
-OSCdef(\dToE).disable
+};
 
 
 

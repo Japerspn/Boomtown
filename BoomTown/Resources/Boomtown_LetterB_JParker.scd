@@ -12,14 +12,27 @@
 );
 
 OSCdef(\aToB, { arg msg, time, addr, recvPort;
-	"Letter B".postln;
-	{~currentLetter.string_("B")}.defer;
 
 	//Free A to B detector synth
 	~pitchDetAtoB.free;
 
 	//Free Letter A Pattern
 	~patternPlayer.stop;
+
+	~letterBFunc.value;
+
+	~bToCListener.value;
+
+	// disable A to B OSCdef
+	OSCdef(\aToB).disable;
+
+}, \tr);
+
+OSCdef(\aToB).disable;
+
+~letterBFunc = {
+	"Letter B".postln;
+	{~currentLetter.string_("B")}.defer;
 
 	//Start Letter B Pattern
 	~patternPlayer = ~joePatternB.play;
@@ -34,8 +47,9 @@ OSCdef(\aToB, { arg msg, time, addr, recvPort;
 		\mix: 0.5,
 		\room: 0.9,
 	]);
+};
 
-
+~bToCListener = {
 	//Start B to C Listener
 	~pitchDetBtoC = Synth(\pitchDetective, [
 		\tarFreq: 233, //B-flat 3
@@ -45,14 +59,7 @@ OSCdef(\aToB, { arg msg, time, addr, recvPort;
 	//Start B to C OSC def
 	OSCdef(\bToC).enable;
 
-	// disable A to B OSCdef
-	OSCdef(\aToB).disable;
-
-}, \tr);
-
-OSCdef(\aToB).disable
-
-
+}
 
 
 

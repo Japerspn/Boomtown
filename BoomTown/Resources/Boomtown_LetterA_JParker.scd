@@ -11,6 +11,23 @@
 	\addAction, \addToHead
 );
 
+~letterAFunc = {
+	"Letter A".postln;
+	~currentLetter.string_("A");
+
+	~patternPlayer = ~joePatternA.play;
+};
+
+~aToBListener = {	//start Listener
+	~pitchDetAtoB = Synth(\pitchDetective, [
+		\tarFreq: 220, //A3
+		\id, 0
+	]);
+	//enable Listener OSC func
+	OSCdef(\aToB).enable;
+
+}
+
 
 
 
