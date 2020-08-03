@@ -201,7 +201,7 @@ w = Window("Boomtown", Rect(
 	}).play;
 
 	//Start F to G Listener
-	~pitchDetEtoF = Synth(\pitchDetective, [
+	~pitchDetFtoG = Synth(\pitchDetective, [
 		\tarFreq: 220, //A3
 		\id, 0
 	]);
@@ -293,7 +293,6 @@ w = Window("Boomtown", Rect(
 	if(view.value == 1,
 		{"It's on!".postln;
 			s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav");
-			//s.record();
 		}, {
 			s.stopRecording;
 		}
@@ -372,6 +371,7 @@ w = Window("Boomtown", Rect(
 
 //DESIGN ELEMENTS
 
+
 ~sliderLabels = [~wetText, ~dryText, ~droneText];
 
 ~sliderLabels.do({|button, index|
@@ -397,7 +397,7 @@ w = Window("Boomtown", Rect(
 ~stopButton.states_([["STOP", ~redDark, Color.black]])
 .font_(Font("Avant Garde", size:20));
 
-~notStopButtons = ~startButtons ++ [~testButton, ~recordButton, ~settingsButton];
+~notStopButtons = ~startButtons ++ [~testButton, ~recordButton];
 
 ~startButtonGuiFunc = {
 	~notStopButtons.do({|button|
