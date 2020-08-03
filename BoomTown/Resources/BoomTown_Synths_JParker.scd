@@ -181,7 +181,7 @@ SynthDef(\outSynth, {
 	sig = In.ar(inbus);
 	sig = Pan2.ar(sig, 0);
 	sig = sig * amp;
-	sig = Compander.ar(
+/*	sig = Compander.ar(
 		in: sig,
 		control: sig,
 		thresh: thresh,
@@ -189,7 +189,7 @@ SynthDef(\outSynth, {
 		slopeAbove: 0.5,
 		clampTime: 0.1,
 		relaxTime: 0.1
-	);
+	);*/
 	Out.ar(0, sig);
 }).add;
 
@@ -199,7 +199,7 @@ SynthDef(\dryOutSynth, {
 	sig = SoundIn.ar(inbus);
 	sig = Pan2.ar(sig, 0);
 	sig = sig * amp;
-	sig = Compander.ar(
+/*	sig = Compander.ar(
 		in: sig,
 		control: sig,
 		thresh: thresh,
@@ -207,7 +207,7 @@ SynthDef(\dryOutSynth, {
 		slopeAbove: 0.5,
 		clampTime: 0.1,
 		relaxTime: 0.1
-	);
+	);*/
 	Out.ar(0, sig);
 }).add;
 /*
