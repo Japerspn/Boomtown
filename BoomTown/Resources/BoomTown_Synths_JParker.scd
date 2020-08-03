@@ -150,17 +150,18 @@ SynthDef(\joeSynthSkip, {//Plays back buffer with an envelope, panning, and reco
 
 
 SynthDef(\pitchDetective,{ // frequency between loFreq and hiFreq sends a trigger as an OSC message with an id of 0
-	arg thresh = 1, id = 0, tarFreq = 80;
-	var chain, sig, freq, hasFreq, freqDif;
+	arg id = 0, tarFreq = 80;
+	var sig, freq, hasFreq, freqDif;
 	sig = SoundIn.ar;
 	//sig = SinOsc.ar(inFreq, mul: 0.5).lag(3);
 
 	# freq, hasFreq = Tartini.kr(sig);
-	//freq.poll;
+	//hasFreq.poll;
+	freq.poll;
 
 	SendTrig.kr(
 		(
-			(freq > (tarFreq - 10)) * (freq < (tarFreq + 10))
+			(freq > (tarFreq - 2)) * (freq < (tarFreq + 2))
 		),
 		id,
 		freq
