@@ -19,16 +19,16 @@ OSCdef(\eToF, { arg msg, time, addr, recvPort;
 		~pbSynth3 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 2, \skipDur: -0.2]);
 	}).play;
 
-	//Start E to F Listener
+	//Start F to G Listener
 	~pitchDetFtoG = Synth(\pitchDetective, [
-		\tarFreq: 196, //G 3
+		\tarFreq: 220, //A 3
 		\id, 0
 	]);
 
-	//Start E to F OSC def
+	//Start F to G OSC def
 	OSCdef(\fToG).enable;
 
-	// disable D to E OSCdef
+	// disable E to F OSCdef
 	OSCdef(\eToF).disable;
 
 }, \tr);
