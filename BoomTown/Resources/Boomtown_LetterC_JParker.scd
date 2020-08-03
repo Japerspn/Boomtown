@@ -54,17 +54,3 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 }, \tr);
 
 OSCdef(\bToC).disable
-
-
-
-
-
-
-
-
-
-
-
-
-
-

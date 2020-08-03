@@ -53,3 +53,19 @@ OSCdef(\dToE, { arg msg, time, addr, recvPort;
 }, \tr);
 
 OSCdef(\dToE).disable
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

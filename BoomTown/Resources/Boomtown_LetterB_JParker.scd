@@ -51,3 +51,16 @@ OSCdef(\aToB, { arg msg, time, addr, recvPort;
 }, \tr);
 
 OSCdef(\aToB).disable
+
+
+
+
+
+
+
+
+
+
+
+
+
