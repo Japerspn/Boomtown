@@ -57,5 +57,3 @@ if(s.serverRunning, {
 })
 
 );
-
-AbstractResponderFunc.
