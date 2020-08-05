@@ -9,7 +9,7 @@ w = Window("Boomtown", Rect(
 	left: Window.screenBounds.width/2-(640/2),
 	top: Window.screenBounds.height/2-(400/2),
 	width: 640,
-	height: 400))
+	height: 500))
 .front
 .alwaysOnTop_(true)
 .background_(~blueDark)
@@ -18,252 +18,122 @@ w = Window("Boomtown", Rect(
 
 });
 
+///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS
+///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS
+///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS
+
 ~startButtonA = Button(w, Rect(10, 310, 80, 80))//Letter A
 .action_({
-	"Letter A".postln;
-	~currentLetter.string_("A");
-
 	~outSynthSetup.value;
-	//start G+D Pattern
-	~patternPlayer = ~joePatternA.play;
-
-	//start Listener
-	~pitchDetAtoB = Synth(\pitchDetective, [
-		\tarFreq: 220, //A3
-		\id, 0
-	]);
-	//enable Listener OSC func
-	OSCdef(\aToB).enable;
-
+	~letterAFunc.value;
+	~aToBListener.value;
 	~startButtonGuiFunc.value
-
 });
 
 ~startButtonB = Button(w, Rect(100, 310, 80, 80))//Letter B
 .action_({
-	"Letter B".postln;
-	~currentLetter.string_("B");
-
 	~outSynthSetup.value;
-
-	//start Letter B Pattern
-	~patternPlayer = ~joePatternB.play;
-
-	//start Delay
-	~delay = Synth(\delay, [
-		\inbus: 0,
-		\outbus: 0,
-		\del: 0.5,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.5,
-		\room: 0.9,
-	]);
-
-	//start Listener
-	~pitchDetBtoC = Synth(\pitchDetective, [
-		\tarFreq: 233, //B-flat 3
-		\id, 0
-	]);
-	//enable Listener OSC func
-	OSCdef(\bToC).enable;
-
+	~letterBFunc.value;
+	~bToCListener.value;
 	~startButtonGuiFunc.value
-
 });
 
 ~startButtonC = Button(w, Rect(190, 310, 80, 80))//Letter C
 .action_({
-	"Letter C".postln;
-	~currentLetter.string_("C");
-
 	~outSynthSetup.value;
-
-	//Start Letter C Pattern
-	~patternPlayer = ~joePattern3.play;
-
-	//Start Slow Chorus
-	t = Task({
-		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
-		1.wait;
-		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.9, \mix: 0.6, \room: 0.75]);
-		0.3.wait;
-		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.925, \mix: 0.45, \room: 0.6]);
-		0.3.wait;
-		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95]);
-	}).play;
-
-	//Start C to D Listener
-	~pitchDetCtoD = Synth(\pitchDetective, [
-		\tarFreq: 196, //G 3
-		\id, 0
-	]);
-
-	//Start C to D OSC def
-	OSCdef(\cToD).enable;
-
+	~letterCFunc.value;
+	~cToDListener.value;
 	~startButtonGuiFunc.value
 
 });
 
 ~startButtonD = Button(w, Rect(280, 310, 80, 80))//Letter D
 .action_({
-	"Letter D".postln;
-	~currentLetter.string_("D");
-
 	~outSynthSetup.value;
-
-	//Start Slow Chorus
-	t = Task({
-		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
-		1.wait;
-		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.9, \mix: 0.6, \room: 0.75]);
-		0.3.wait;
-		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.925, \mix: 0.45, \room: 0.6]);
-		0.3.wait;
-		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95]);
-	}).play;
-
-	//Start D to E Listener
-	~pitchDetDtoE = Synth(\pitchDetective, [
-		\tarFreq: 233, //Bb
-		\id, 0
-	]);
-
-	//Start D to E OSC def
-	OSCdef(\dToE).enable;
-
+	~letterDFunc.value;
+	~dToEListener.value;
 	~startButtonGuiFunc.value
-
 });
 
 ~startButtonE = Button(w, Rect(370, 310, 80, 80))//Letter E
 .action_({
-	"Letter E".postln;
-	~currentLetter.string_("E");
-
 	~outSynthSetup.value;
-
-	//Start Letter E Pattern
-	~patternPlayer = ~joePatternE.play;
-
-	//Start Delay
-	~delay = Synth(\delay, [
-		\inbus: 0,
-		\outbus: ~wetBus,
-		\del: 0.5,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.5,
-		\room: 0.9,
-	]);
-
-	//Start E to F Listener
-	~pitchDetEtoF = Synth(\pitchDetective, [
-		\tarFreq: 196, //G 3
-		\id, 0
-	]);
-
-	//Start E to F OSC def
-	OSCdef(\eToF).enable;
-
+	~letterEFunc.value;
+	~eToFListener.value;
 	~startButtonGuiFunc.value
-
 });
 
 ~startButtonF = Button(w, Rect(460, 310, 80, 80))//Letter A
 .action_({
-	"Letter F".postln;
-	~currentLetter.string_("F");
-
 	~outSynthSetup.value;
-
-	//Start Delay
-	~delay = Synth(\delay, [
-		\inbus: 0,
-		\outbus: ~wetBus,
-		\del: 0.5,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.5,
-		\room: 0.9,
-	]);
-
-	//Start Slow Chorus w/ Skip
-	t = Task({
-		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
-		0.1.wait;
-		~pbSynth1 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 1, \skipDur: -0.5]);
-		0.3.wait;
-		~pbSynth2 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 1.5, \skipDur: -0.3]);
-		0.3.wait;
-		~pbSynth3 = Synth(\skipBuf, [\bufnum: ~bufArrayBig[0], \outbus: ~wetBus, \skipDens: 2, \skipDur: -0.2]);
-	}).play;
-
-	//Start F to G Listener
-	~pitchDetFtoG = Synth(\pitchDetective, [
-		\tarFreq: 220, //A3
-		\id, 0
-	]);
-
-	//Start F to G OSC def
-	OSCdef(\fToG).enable;
-
+	~letterFFunc.value;
+	~fToGListener.value;
 	~startButtonGuiFunc.value
-
 });
 
 ~startButtonG = Button(w, Rect(550, 310, 80, 80))//Letter G
 .action_({
-	"Letter G".postln;
-	~currentLetter.string_("G");
-
 	~outSynthSetup.value;
-
-	//Start Delays
-	~delay = Synth(\delay, [
-		\inbus: 0,
-		\outbus: ~wetBus,
-		\del: 0.5,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.5,
-		\room: 0.9,
-	]);
-
-	~delay1 = Synth(\delay, [
-		\inbus: 0,
-		\outbus: ~wetBus,
-		\del: 0.5,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.5,
-		\room: 0.9,
-	]);
-
-	~delay2 = Synth(\delay, [
-		\inbus: 0,
-		\outbus: ~wetBus,
-		\del: 1,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.6,
-		\room: 0.9,
-	]);
-
-	~delay3 = Synth(\delay, [
-		\inbus: 0,
-		\outbus: ~wetBus,
-		\del: 2,
-		\rel: 10,
-		\atk: 10,
-		\mix: 0.7,
-		\room: 0.9,
-	]);
-
-	~startButtonGuiFunc.value
-
+	~letterGFunc.value;
+	~startButtonGuiFunc.value;
 });
+
+///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS
+///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS
+///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS
+
+~startButtonAstatic = Button(w, Rect(10, 410, 80, 80))//Letter A
+.action_({
+	~outSynthSetup.value;
+	~letterAFunc.value;
+	~startButtonGuiFunc.value
+});
+
+~startButtonBstatic = Button(w, Rect(100, 410, 80, 80))//Letter B
+.action_({
+	~outSynthSetup.value;
+	~letterBFunc.value;
+	~startButtonGuiFunc.value
+});
+
+~startButtonCstatic = Button(w, Rect(190, 410, 80, 80))//Letter C
+.action_({
+	~outSynthSetup.value;
+	~letterCFunc.value;
+	~startButtonGuiFunc.value
+});
+
+~startButtonDstatic = Button(w, Rect(280, 410, 80, 80))//Letter D
+.action_({
+	~outSynthSetup.value;
+	~letterDFunc.value;
+	~startButtonGuiFunc.value
+});
+
+~startButtonEstatic = Button(w, Rect(370, 410, 80, 80))//Letter E
+.action_({
+	~outSynthSetup.value;
+	~letterEFunc.value;
+	~startButtonGuiFunc.value
+});
+
+~startButtonFstatic = Button(w, Rect(460, 410, 80, 80))//Letter A
+.action_({
+	~outSynthSetup.value;
+	~letterFFunc.value;
+	~startButtonGuiFunc.value
+});
+
+~startButtonGstatic = Button(w, Rect(550, 410, 80, 80))//Letter G
+.action_({
+	~outSynthSetup.value;
+	~letterGFunc.value;
+	~startButtonGuiFunc.value;
+});
+
+///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///
+///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///
+///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///
 
 ~stopButton = Button(w, Rect(210,110,100,100))//Stop Button
 .visible_("false")
@@ -307,14 +177,26 @@ w = Window("Boomtown", Rect(
 			~startButtons.do({|button|
 				button.visible_("false")
 			});
+			~staticStartButtons.do({|button|
+				button.visible_("false")
+			});
+			~practiceText.visible_("false")
 		}, {
 			"output Synths are off".postln;
 			~outSynthSetup.value;
 			~startButtons.do({|button|
 				button.visible_("true")
 			});
+			~staticStartButtons.do({|button|
+				button.visible_("true")
+			});
+			~practiceText.visible_("true")
 		}
 )});
+
+///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT
+///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT
+///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT///TEXT
 
 10.do({ |index|
 	var colors = [0.5, 0.4, 0.3, 0.2, 0.1, 0];
@@ -323,6 +205,9 @@ w = Window("Boomtown", Rect(
 	.stringColor_(Color.gray(0.7 - (index / 13)))
 	.font_(Font("Avant Garde", 40, "true"));
 });
+
+~practiceText = StaticText(w, Rect(10, 390, 620, 15))
+.string_("Buttons in the bottom row are practice buttons, you won't be able to move between the sections");
 
 ~currentLetterText = StaticText(w, Rect(10, 60, 150, 20))
 .string_("Current Letter:")
@@ -369,8 +254,9 @@ w = Window("Boomtown", Rect(
 
 ~meters = ServerMeterView(s, w, 520@50, 1, 2);
 
-//DESIGN ELEMENTS
-
+///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS
+///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS
+///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS///DESIGN ELEMENTS
 
 ~sliderLabels = [~wetText, ~dryText, ~droneText];
 
@@ -385,7 +271,26 @@ w = Window("Boomtown", Rect(
 .font_(Font("Avant Garde", size:20));
 
 
-~startButtons = [~startButtonA, ~startButtonB, ~startButtonC, ~startButtonD, ~startButtonE, ~startButtonF, ~startButtonG];
+~startButtons = [
+	~startButtonA,
+	~startButtonB,
+	~startButtonC,
+	~startButtonD,
+	~startButtonE,
+	~startButtonF,
+	~startButtonG,
+];
+
+~staticStartButtons = [
+	~startButtonAstatic,
+	~startButtonBstatic,
+	~startButtonCstatic,
+	~startButtonDstatic,
+	~startButtonEstatic,
+	~startButtonFstatic,
+	~startButtonGstatic,
+];
+
 ~strings = ["A", "B", "C", "D", "E", "F", "G"];
 
 ~startButtons.do({|button, index|
@@ -394,10 +299,16 @@ w = Window("Boomtown", Rect(
 
 });
 
+~staticStartButtons.do({|button, index|
+	button.font_(Font("Avant Garde", size:20));
+	button.states_([[~strings[index], ~blueMid, Color.black]])
+
+});
+
 ~stopButton.states_([["STOP", ~redDark, Color.black]])
 .font_(Font("Avant Garde", size:20));
 
-~notStopButtons = ~startButtons ++ [~testButton, ~recordButton];
+~notStopButtons = ~startButtons ++ ~staticStartButtons ++ [~testButton, ~recordButton, ~practiceText];
 
 ~startButtonGuiFunc = {
 	~notStopButtons.do({|button|
@@ -408,7 +319,7 @@ w = Window("Boomtown", Rect(
 
 ~stopButtonGuiFunc = {
 	~notStopButtons.do({|button|
-		button.visible_("tru")
+		button.visible_("true")
 	});
 	~stopButton.visible_("false");
 };

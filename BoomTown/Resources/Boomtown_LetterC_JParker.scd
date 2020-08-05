@@ -12,8 +12,7 @@
 );
 
 OSCdef(\bToC, { arg msg, time, addr, recvPort;
-	"Letter C".postln;
-	{~currentLetter.string_("C")}.defer;
+
 
 	//Free B to C detector synth
 	~pitchDetBtoC.free;
@@ -24,22 +23,62 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 	//Free Delay Synth
 	~delay.set(\gate, 0);
 
+	~letterCFunc.value;
+
+	~cToDListener.value;
+
+	// disable B to C OSCdef
+	OSCdef(\bToC).disable;
+
+}, \tr);
+
+OSCdef(\bToC).disable;
+
+~letterCFunc = {
+	"Letter C".postln;
+	{~currentLetter.string_("C")}.defer;
 
 	//Start Letter C Pattern
 	~patternPlayer = ~joePatternC.play;
 
 	//Start Slow Chorus
 	t = Task({
-		~recSynth = Synth(\recordBuf, [\bufnum: ~bufArrayBig[0]]);
+		~recSynth = Synth(\recordBuf, [
+			\bufnum: ~bufArrayBig[0]
+		]);
+
 		1.wait;
-		~pbSynth1 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.8, \mix: 0.6, \room: 0.75, \outbus, ~wetBus]);
+
+		~pbSynth1 = Synth(\playbackBuf, [
+			\bufnum: ~bufArrayBig[0],
+			\rate: 0.8,
+			\mix: 0.6,
+			\room: 0.75,
+			\outbus: ~wetBus]);
+
 		0.3.wait;
-		~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6, \outbus, ~wetBus]);
+
+		~pbSynth2 = Synth(\playbackBuf, [
+			\bufnum: ~bufArrayBig[0],
+			\rate: 0.85,
+			\mix: 0.45,
+			\room: 0.6,
+			\outbus: ~wetBus
+		]);
+
 		0.3.wait;
-		~pbSynth3 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.95, \outbus, ~wetBus]);
+
+		~pbSynth3 = Synth(\playbackBuf, [
+			\bufnum: ~bufArrayBig[0],
+			\rate: 0.95,
+			\outbus: ~wetBus]);
 	}).play;
 
+};
+
+~cToDListener = {
 	//Start C to D Listener
+
 	~pitchDetCtoD = Synth(\pitchDetective, [
 		\tarFreq: 196, //G 3
 		\id, 0
@@ -48,9 +87,4 @@ OSCdef(\bToC, { arg msg, time, addr, recvPort;
 	//Start C to D OSC def
 	OSCdef(\cToD).enable;
 
-	// disable B to C OSCdef
-	OSCdef(\bToC).disable;
-
-}, \tr);
-
-OSCdef(\bToC).disable
+};

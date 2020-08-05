@@ -1,6 +1,4 @@
 OSCdef(\fToG, { arg msg, time, addr, recvPort;
-	"Letter G".postln;
-	{~currentLetter.string_("G")}.defer;
 
 	//Free F to G detector synth
 	~pitchDetFtoG.free;
@@ -11,6 +9,18 @@ OSCdef(\fToG, { arg msg, time, addr, recvPort;
 	~pbSynth2.set(\gate, 0);
 	~pbSynth3.set(\gate, 0);
 
+	~letterGFunc.value;
+
+	// disable D to E OSCdef
+	OSCdef(\eToF).disable;
+
+}, \tr);
+
+OSCdef(\eToF).disable;
+
+~letterGFunc = {
+	"Letter G".postln;
+	{~currentLetter.string_("G")}.defer;
 	//Start Delay
 	~delay1 = Synth(\delay, [
 		\inbus: 0,
@@ -22,7 +32,7 @@ OSCdef(\fToG, { arg msg, time, addr, recvPort;
 		\room: 0.9,
 	]);
 
-		//Start Delay
+	//Start Delay
 	~delay2 = Synth(\delay, [
 		\inbus: 0,
 		\outbus: ~wetBus,
@@ -33,7 +43,7 @@ OSCdef(\fToG, { arg msg, time, addr, recvPort;
 		\room: 0.9,
 	]);
 
-		//Start Delay
+	//Start Delay
 	~delay3 = Synth(\delay, [
 		\inbus: 0,
 		\outbus: ~wetBus,
@@ -44,9 +54,4 @@ OSCdef(\fToG, { arg msg, time, addr, recvPort;
 		\room: 0.9,
 	]);
 
-	// disable D to E OSCdef
-	OSCdef(\eToF).disable;
-
-}, \tr);
-
-OSCdef(\eToF).disable;
+};
