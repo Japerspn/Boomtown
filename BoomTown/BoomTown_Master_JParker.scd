@@ -8,6 +8,11 @@ s.waitForBoot({
 	~dryBus = Bus.audio(s, 2);
 	~wetBus = Bus.audio(s, 2);
 
+	~d2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone18 (D2)_JParker_V2.wav");
+	~g2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone19 (G3)_JParker_V2.wav");
+	~d3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone20 (D3)_JParker_V2.wav");
+	~d3andG2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone21 (G3 and D3)_JParker_V2.wav");
+
 	~g3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone12 (G3)_JParker_V2.wav");
 	~beef3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone07 (Bb3)_JParker_V2.wav");
 	~c4 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone04 (C4)_JParker_V2.wav");
@@ -33,9 +38,10 @@ s.waitForBoot({
 	~gMaj = [~g3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~fis5, ~g5, ~a5, ~b5, ~d6, ~e6];
 	~gDom = [~g3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~f5, ~g5, ~a5, ~b5, ~d6, ~e6];
 	~gMin = [~g3, ~beef3, ~c4, ~g4, ~a4one, ~a4two, ~c5, ~d5one, ~d5two, ~f5, ~g5, ~a5, ~beef5, ~d6];
+	~lowEnd = [~d2, ~g2, ~d3, ~d3andG2];
 
-	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_Gui_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_Synths_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_Gui_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterA_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterB_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterC_JParker.scd", "r").readAllString.interpret;
@@ -48,9 +54,10 @@ s.waitForBoot({
 });
 
 if(s.serverRunning, {
+	Server.killAll;
 	s.options.memSize_(2.pow(20));
 	s.options.numOutputBusChannels_(4);
-	s.reboot;
+	s.boot;
 }, {s.options.memSize_(2.pow(20));
 	s.options.numOutputBusChannels_(4);
 	s.boot;

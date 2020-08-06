@@ -5,7 +5,8 @@ OSCdef(\eToF, { arg msg, time, addr, recvPort;
 	~pitchDetEtoF.free;
 
 	//Free Letter E Pattern
-	~patternPlayer.stop;
+	~patternPlayer1.stop;
+	~patternPlayer2.stop;
 
 	~letterFFunc.value;
 
@@ -51,6 +52,7 @@ OSCdef(\eToF).disable;
 			\skipDur: -0.2
 		]);
 	}).play;
+~lowG = Synth(\playbackBuf2Chan, [\bufnum: ~g2, \numChannels: 2, \rate: 1, \mix: 0.85, \room: 0.8]);
 
 };
 

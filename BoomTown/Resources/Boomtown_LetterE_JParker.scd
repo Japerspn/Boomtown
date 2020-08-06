@@ -1,15 +1,32 @@
 ~joePatternE = Pbind(
 	\instrument, \joeSynthSkip,
 	\bufnum, Pxrand(~all, inf),
-	\atk, 5,
-	\sus, 5,
-	\rel, 5,
-	\dur, 2,
+	\atk, 3,
+	\sus, 2,
+	\rel, 3,
+	\dur, 1,
 	\mix, 0.4,
 	\room, 0.5,
+	\amp, 0.5,
 	\outbus, ~droneBus,
 	\addAction, \addToHead
 );
+
+~joePatternELow = Pbind(
+	\instrument, \joeSynth,
+	\bufnum, Pxrand(~lowEnd, inf),
+	\atk, 3,
+	\sus, 1,
+	\rel, 3,
+	\dur, 1,
+	\mix, 0.7,
+	\room, 0.9,
+	\amp, 0.5,
+	\outbus, ~droneBus,
+	\addAction, \addToHead
+);
+
+
 
 OSCdef(\dToE, { arg msg, time, addr, recvPort;
 
@@ -21,6 +38,9 @@ OSCdef(\dToE, { arg msg, time, addr, recvPort;
 	~pbSynth1.set(\gate, 0);
 	~pbSynth2.set(\gate, 0);
 	~pbSynth3.set(\gate, 0);
+
+	//Stop Pattern
+	~patternPlayer.stop;
 
 	~letterEFunc.value;
 
@@ -38,7 +58,8 @@ OSCdef(\dToE).disable;
 	{~currentLetter.string_("E")}.defer;
 
 	//Start Letter E Pattern
-	~patternPlayer = ~joePatternE.play;
+	~patternPlayer1 = ~joePatternE.play;
+	~patternPlayer2 = ~joePatternELow.play;
 
 	//Start Delay
 	~delay = Synth(\delay, [
