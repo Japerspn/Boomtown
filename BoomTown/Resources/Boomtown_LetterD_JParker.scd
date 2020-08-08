@@ -4,7 +4,7 @@
 	\atk, 5,
 	\sus, 5,
 	\rel, 5,
-	\dur, 7,
+	\dur, 13,
 	\mix, 0.7,
 	\room, 0.9,
 	\amp, 0.25,
