@@ -13,7 +13,7 @@
 
 ~letterAFunc = {
 	"Letter A".postln;
-	~currentLetter.string_("A");
+	{~currentLetter.string_("A")}.defer;
 
 	~patternPlayer = ~joePatternA.play;
 };

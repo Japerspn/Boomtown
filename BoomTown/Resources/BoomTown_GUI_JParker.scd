@@ -14,8 +14,7 @@ w = Window("Boomtown", Rect(
 .alwaysOnTop_(true)
 .background_(~blueDark)
 .onClose_({
-	s.freeAll
-
+	s.freeAll;
 });
 
 ///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS///START BUTTONS
@@ -25,7 +24,9 @@ w = Window("Boomtown", Rect(
 ~startButtonA = Button(w, Rect(10, 310, 80, 80))//Letter A
 .action_({
 	~outSynthSetup.value;
+	t = Task({ 10.wait;
 	~letterAFunc.value;
+	}).play;
 	~aToBListener.value;
 	~startButtonGuiFunc.value
 });
@@ -139,9 +140,9 @@ w = Window("Boomtown", Rect(
 .visible_("false")
 .action_({
 	s.freeAll;
-	~patternPlayer.stop;
-	~patternPlayer1.stop;
-	~patternPlayer2.stop;
+	if(~patternPlayer.isPlaying, {~patternPlayer.stop});
+	if(~patternPlayer1.isPlaying, {~patternPlayer1.stop});
+	if(~patternPlayer2.isPlaying, {~patternPlayer2.stop});
 	if(t.isPlaying, {t.stop});
 
 	~currentLetter.string_("");
