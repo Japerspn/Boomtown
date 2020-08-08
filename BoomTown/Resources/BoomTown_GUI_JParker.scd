@@ -166,7 +166,7 @@ w = Window("Boomtown", Rect(
 .action_({|view|
 	if(view.value == 1,
 		{"It's on!".postln;
-			s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav");
+			s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav", numChannels: 8);
 		}, {
 			s.stopRecording;
 		}

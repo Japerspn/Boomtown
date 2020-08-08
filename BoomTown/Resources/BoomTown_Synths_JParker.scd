@@ -196,7 +196,7 @@ SynthDef(\pitchDetective,{ // frequency between loFreq and hiFreq sends a trigge
 */
 
 SynthDef(\outSynth, {
-	arg amp = 1, thresh = 0.9, inbus = 0;
+	arg amp = 1, thresh = 0.9, inbus = 0, otherOut = 0;
 	var sig;
 	sig = In.ar(inbus);
 	sig = Pan2.ar(sig, 0);
@@ -210,7 +210,7 @@ SynthDef(\outSynth, {
 		clampTime: 0.1,
 		relaxTime: 0.1
 	);*/
-	Out.ar(0, sig);
+	Out.ar([0, otherOut], sig);
 }).add;
 
 SynthDef(\dryOutSynth, {
@@ -228,7 +228,7 @@ SynthDef(\dryOutSynth, {
 		clampTime: 0.1,
 		relaxTime: 0.1
 	);*/
-	Out.ar(0, sig);
+	Out.ar([0, 2], sig);
 }).add;
 /*
 (
@@ -268,6 +268,7 @@ SynthDef(\dryOutSynth, {
 			\amp: ~droneOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: ~droneBus,
+			\otherOut: 6
 		]).register;
 
 	}, {
@@ -279,6 +280,7 @@ SynthDef(\dryOutSynth, {
 			\amp: ~wetOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: ~wetBus,
+			\otherOut: 4
 		]).register;
 
 	}, {

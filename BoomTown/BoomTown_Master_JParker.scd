@@ -56,10 +56,10 @@ s.waitForBoot({
 if(s.serverRunning, {
 	Server.killAll;
 	s.options.memSize_(2.pow(20));
-	s.options.numOutputBusChannels_(4);
+	s.options.numOutputBusChannels_(8);
 	s.boot;
 }, {s.options.memSize_(2.pow(20));
-	s.options.numOutputBusChannels_(4);
+	s.options.numOutputBusChannels_(8);
 	s.boot;
 })
 
