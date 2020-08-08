@@ -34,7 +34,7 @@ SynthDef(\playbackBuf, {// plays specified buffer w/ reverb
 */
 
 SynthDef(\playbackBuf2Chan, {// plays specified buffer w/ reverb
-	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5, gate = 1, atk = 5, rel = 10;
+	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5, gate = 1, atk = 5, rel = 10, amp = 1;
 	var sig, env;
 
 	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
@@ -47,7 +47,7 @@ SynthDef(\playbackBuf2Chan, {// plays specified buffer w/ reverb
 	sig = FreeVerb.ar(sig, mix, room);
 	sig = sig * env;
 
-	Out.ar(~wetBus, sig * 2);
+	Out.ar(outbus, sig * 2 * amp);
 }).add;
 /*
 ~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);

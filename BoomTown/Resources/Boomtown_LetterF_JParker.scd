@@ -52,7 +52,7 @@ OSCdef(\eToF).disable;
 			\skipDur: -0.2
 		]);
 	}).play;
-~lowG = Synth(\playbackBuf2Chan, [\bufnum: ~g2, \numChannels: 2, \rate: 1, \mix: 0.85, \room: 0.8]);
+~lowG = Synth(\playbackBuf2Chan, [\bufnum: ~g2, \numChannels: 2, \rate: 1, \mix: 0.85, \room: 0.8, \outbus, ~droneBus, \amp, 0.5]);
 
 };
 
