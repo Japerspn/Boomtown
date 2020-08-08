@@ -1,3 +1,17 @@
+~joePatternDLow = Pbind(
+	\instrument, \joeSynth,
+	\bufnum, Pxrand(~lowEnd, inf),
+	\atk, 5,
+	\sus, 5,
+	\rel, 5,
+	\dur, 7,
+	\mix, 0.7,
+	\room, 0.9,
+	\amp, 1,
+	\outbus, ~droneBus,
+	\addAction, \addToHead
+);
+
 OSCdef(\cToD, { arg msg, time, addr, recvPort;
 
 
@@ -27,6 +41,9 @@ OSCdef(\cToD).disable;
 ~letterDFunc = {
 	"Letter D".postln;
 	{~currentLetter.string_("D")}.defer;
+
+	//Start Low Pattern
+	~patternPlayer = ~joePatternDLow.play;
 
 	//Start Slow Chorus
 	t = Task({

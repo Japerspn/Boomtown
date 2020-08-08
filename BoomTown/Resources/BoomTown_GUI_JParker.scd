@@ -139,7 +139,9 @@ w = Window("Boomtown", Rect(
 .visible_("false")
 .action_({
 	s.freeAll;
-	if(~patternPlayer.isPlaying, {~patternPlayer.stop});
+	~patternPlayer.stop;
+	~patternPlayer1.stop;
+	~patternPlayer2.stop;
 	if(t.isPlaying, {t.stop});
 
 	~currentLetter.string_("");
@@ -153,6 +155,7 @@ w = Window("Boomtown", Rect(
 
 	~stopButtonGuiFunc.value;
 	~recordButton.value = 0;
+	~patternPlayer2.stop;
 
 });
 

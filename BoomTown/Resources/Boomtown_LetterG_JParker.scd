@@ -2,6 +2,8 @@ OSCdef(\fToG, { arg msg, time, addr, recvPort;
 
 	//Free F to G detector synth
 	~pitchDetFtoG.free;
+	//Free Low G
+	~lowG.set(\gate, 0);
 
 	//Free Slow Chorus Synth
 	~recSynth.set(\gate, 0);

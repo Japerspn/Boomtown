@@ -6,7 +6,7 @@ SynthDef(\recordBuf, {// records into specified buffer
 
 	sig = RecordBuf.ar(SoundIn.ar(inbus), bufnum, loop: loop, doneAction: 2);// if loop = 0, buffer does not repeat.
 	sig = sig * env;
-	Out.ar(outbus, sig)
+	//Out.ar(outbus, sig)
 }).add;
 /*
 ~recordSynth = Synth(\recordBuf, [\bufnum: ~bufRay[0], \loop: 1]);
@@ -21,6 +21,26 @@ SynthDef(\playbackBuf, {// plays specified buffer w/ reverb
 
 
 	sig = PlayBuf.ar(1, bufnum, BufRateScale.kr(bufnum) * rate, loop: loop, doneAction: 2);
+	sig = PitchShift.ar(sig, pitchRatio: rate.reciprocal);
+	sig = LPF.ar(sig, 3000);
+	sig = HPF.ar(sig, 300);
+	sig = FreeVerb.ar(sig, mix, room);
+	sig = sig * env;
+
+	Out.ar(~wetBus, sig * 2);
+}).add;
+/*
+~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);
+*/
+
+SynthDef(\playbackBuf2Chan, {// plays specified buffer w/ reverb
+	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5, gate = 1, atk = 5, rel = 10;
+	var sig, env;
+
+	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
+
+
+	sig = PlayBuf.ar(2, bufnum, BufRateScale.kr(bufnum) * rate, loop: loop, doneAction: 2);
 	sig = PitchShift.ar(sig, pitchRatio: rate.reciprocal);
 	sig = LPF.ar(sig, 3000);
 	sig = HPF.ar(sig, 300);
@@ -88,7 +108,7 @@ SynthDef(\skipBuf, {//plays back a buffer with record skipping effect controlled
 
 
 SynthDef(\joeSynth, {//Plays back buffer with an envelope and panning. Designed for use in a pattern
-	arg amp = 1, atk = 1, sus = 1, rel = 1, bufnum = 0, pan = 0, mix = 0.33, room = 0.5, damp = 0.5;
+	arg amp = 1, atk = 1, sus = 1, rel = 1, bufnum = 0, pan = 0, mix = 0.33, room = 0.5, damp = 0.5, outbus = 0;
 	var sig, env;
 
 	env = EnvGen.kr(Env.new([0,1,1,0], [atk, sus, rel]), doneAction: 2);
@@ -96,7 +116,7 @@ SynthDef(\joeSynth, {//Plays back buffer with an envelope and panning. Designed 
 	sig = Pan2.ar(sig, pan);
 	sig = FreeVerb.ar(sig, mix, room, damp);
 	sig = sig * amp * env;
-	Out.ar(~droneBus, sig);
+	Out.ar(outbus, sig);
 
 }).add;
 /*
@@ -114,7 +134,7 @@ SynthDef(\joeSynth, {//Plays back buffer with an envelope and panning. Designed 
 
 
 SynthDef(\joeSynthSkip, {//Plays back buffer with an envelope, panning, and record skip effect. Designed for use in a pattern
-	arg skipDur = -0.5, bufnum, skipDens = 1, amp = 1, atk = 1, sus = 1, rel = 1, pan = 0, mix = 0.33, room = 0.5, damp = 0.5;
+	arg skipDur = -0.5, bufnum, skipDens = 1, amp = 1, atk = 1, sus = 1, rel = 1, pan = 0, mix = 0.33, room = 0.5, damp = 0.5, outbus = 0;
 	var sig, pos, resetPos, env;
 
 	env = EnvGen.kr(Env.new([0,1,1,0], [atk, sus, rel]), doneAction: 2);
@@ -128,7 +148,7 @@ SynthDef(\joeSynthSkip, {//Plays back buffer with an envelope, panning, and reco
 	sig = BufRd.ar(2, bufnum, pos);
 	sig = sig * env * amp;
 	sig = FreeVerb.ar(sig, );
-	Out.ar(~droneBus, sig);
+	Out.ar(outbus, sig);
 }).add;
 
 /*
