@@ -7,7 +7,7 @@
 	\dur, 7,
 	\mix, 0.7,
 	\room, 0.9,
-	\amp, 1,
+	\amp, 0.25,
 	\outbus, ~droneBus,
 	\addAction, \addToHead
 );

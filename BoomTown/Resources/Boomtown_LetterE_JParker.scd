@@ -7,7 +7,7 @@
 	\dur, 1,
 	\mix, 0.4,
 	\room, 0.5,
-	\amp, 0.5,
+	\amp, 0.1,
 	\outbus, ~droneBus,
 	\addAction, \addToHead
 );
@@ -18,10 +18,10 @@
 	\atk, 3,
 	\sus, 1,
 	\rel, 3,
-	\dur, 1,
+	\dur, 2,
 	\mix, 0.7,
 	\room, 0.9,
-	\amp, 0.5,
+	\amp, 0.1,
 	\outbus, ~droneBus,
 	\addAction, \addToHead
 );
