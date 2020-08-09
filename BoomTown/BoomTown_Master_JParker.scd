@@ -7,6 +7,7 @@ s.waitForBoot({
 	~droneBus = Bus.audio(s, 2);
 	~dryBus = Bus.audio(s, 2);
 	~wetBus = Bus.audio(s, 2);
+	 ~freqBus = Bus.new(\control, 0, 1);
 
 	~d2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone18 (D2)_JParker_V2.wav");
 	~g2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone19 (G3)_JParker_V2.wav");

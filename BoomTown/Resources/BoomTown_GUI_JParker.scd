@@ -23,53 +23,95 @@ w = Window("Boomtown", Rect(
 
 ~startButtonA = Button(w, Rect(10, 310, 80, 80))//Letter A
 .action_({
-	~outSynthSetup.value;
-	t = Task({ 10.wait;
-	~letterAFunc.value;
-	}).play;
-	~aToBListener.value;
-	~startButtonGuiFunc.value
+	if(~practiceModeCheckBox.value, {
+		~outSynthSetup.value;
+		~startButtonGuiFunc.value;
+	},{
+		~outSynthSetup.value;
+		~aToBListener.value;
+		~startButtonGuiFunc.value;
+	});
+
+	if(~leadInCheckBox.value, {
+		t = Task({ 10.wait;
+			~letterAFunc.value;
+		}).play;
+	}, {
+		~letterAFunc.value;
+	});
 });
 
 ~startButtonB = Button(w, Rect(100, 310, 80, 80))//Letter B
 .action_({
-	~outSynthSetup.value;
-	~letterBFunc.value;
-	~bToCListener.value;
-	~startButtonGuiFunc.value
+	if(~practiceModeCheckBox.value, {
+		~outSynthSetup.value;
+		~letterBFunc.value;
+		~startButtonGuiFunc.value;
+
+	},{
+		~outSynthSetup.value;
+		~letterBFunc.value;
+		~bToCListener.value;
+		~startButtonGuiFunc.value;
+	});
+
 });
 
 ~startButtonC = Button(w, Rect(190, 310, 80, 80))//Letter C
 .action_({
-	~outSynthSetup.value;
-	~letterCFunc.value;
-	~cToDListener.value;
-	~startButtonGuiFunc.value
-
+	if(~practiceModeCheckBox.value, {
+		~outSynthSetup.value;
+		~letterCFunc.value;
+		~startButtonGuiFunc.value;
+	},{
+		~outSynthSetup.value;
+		~letterCFunc.value;
+		~cToDListener.value;
+		~startButtonGuiFunc.value;
+	});
 });
 
 ~startButtonD = Button(w, Rect(280, 310, 80, 80))//Letter D
 .action_({
-	~outSynthSetup.value;
-	~letterDFunc.value;
-	~dToEListener.value;
-	~startButtonGuiFunc.value
+	if(~practiceModeCheckBox.value, {
+		~outSynthSetup.value;
+		~letterDFunc.value;
+		~startButtonGuiFunc.value;
+	},{
+		~outSynthSetup.value;
+		~letterDFunc.value;
+		~dToEListener.value;
+		~startButtonGuiFunc.value;
+	});
 });
 
 ~startButtonE = Button(w, Rect(370, 310, 80, 80))//Letter E
 .action_({
-	~outSynthSetup.value;
-	~letterEFunc.value;
-	~eToFListener.value;
-	~startButtonGuiFunc.value
+	if(~practiceModeCheckBox.value, {
+		~outSynthSetup.value;
+		~letterEFunc.value;
+		~startButtonGuiFunc.value;
+
+	},{
+		~outSynthSetup.value;
+		~letterEFunc.value;
+		~eToFListener.value;
+		~startButtonGuiFunc.value;
+	});
 });
 
 ~startButtonF = Button(w, Rect(460, 310, 80, 80))//Letter A
 .action_({
-	~outSynthSetup.value;
-	~letterFFunc.value;
-	~fToGListener.value;
-	~startButtonGuiFunc.value
+	if(~practiceModeCheckBox.value, {
+		~outSynthSetup.value;
+		~letterFFunc.value;
+		~startButtonGuiFunc.value;
+	}, {
+		~outSynthSetup.value;
+		~letterFFunc.value;
+		~fToGListener.value;
+		~startButtonGuiFunc.value;
+	});
 });
 
 ~startButtonG = Button(w, Rect(550, 310, 80, 80))//Letter G
@@ -79,62 +121,16 @@ w = Window("Boomtown", Rect(
 	~startButtonGuiFunc.value;
 });
 
-///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS
-///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS
-///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS///STATIC START BUTTONS
-
-~startButtonAstatic = Button(w, Rect(10, 410, 80, 80))//Letter A
-.action_({
-	~outSynthSetup.value;
-	~letterAFunc.value;
-	~startButtonGuiFunc.value
-});
-
-~startButtonBstatic = Button(w, Rect(100, 410, 80, 80))//Letter B
-.action_({
-	~outSynthSetup.value;
-	~letterBFunc.value;
-	~startButtonGuiFunc.value
-});
-
-~startButtonCstatic = Button(w, Rect(190, 410, 80, 80))//Letter C
-.action_({
-	~outSynthSetup.value;
-	~letterCFunc.value;
-	~startButtonGuiFunc.value
-});
-
-~startButtonDstatic = Button(w, Rect(280, 410, 80, 80))//Letter D
-.action_({
-	~outSynthSetup.value;
-	~letterDFunc.value;
-	~startButtonGuiFunc.value
-});
-
-~startButtonEstatic = Button(w, Rect(370, 410, 80, 80))//Letter E
-.action_({
-	~outSynthSetup.value;
-	~letterEFunc.value;
-	~startButtonGuiFunc.value
-});
-
-~startButtonFstatic = Button(w, Rect(460, 410, 80, 80))//Letter A
-.action_({
-	~outSynthSetup.value;
-	~letterFFunc.value;
-	~startButtonGuiFunc.value
-});
-
-~startButtonGstatic = Button(w, Rect(550, 410, 80, 80))//Letter G
-.action_({
-	~outSynthSetup.value;
-	~letterGFunc.value;
-	~startButtonGuiFunc.value;
-});
-
 ///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///
 ///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///
 ///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///OTHER BUTTONS///
+
+~practiceModeCheckBox = CheckBox.new(w, Rect(10, 400, 120, 20), "Practice Mode");
+
+~leadInCheckBox = CheckBox.new(w, Rect(150, 400, 130, 20), "10 second lead in");
+
+~multiRecordCheckBox = CheckBox.new(w, Rect(290, 400, 150, 20), "Multichannel Record?");
+
 
 ~stopButton = Button(w, Rect(210,110,100,100))//Stop Button
 .visible_("false")
@@ -165,8 +161,12 @@ w = Window("Boomtown", Rect(
 ~recordButton = Button(w, Rect(180, 240, 160, 40))
 .action_({|view|
 	if(view.value == 1,
-		{"It's on!".postln;
-			s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav", numChannels: 8);
+		{
+			if(~multiRecordCheckBox.value, {
+				s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav", numChannels: 8);
+			}, {
+				s.record(~path +/+ "/Recordings/Boomtown_" ++ Date.localtime.stamp ++ ".wav", numChannels: 2);
+			})
 		}, {
 			s.stopRecording;
 		}
@@ -209,9 +209,6 @@ w = Window("Boomtown", Rect(
 	.stringColor_(Color.gray(0.7 - (index / 13)))
 	.font_(Font("Avant Garde", 40, "true"));
 });
-
-~practiceText = StaticText(w, Rect(10, 390, 620, 15))
-.string_("Buttons in the bottom row are practice buttons, you won't be able to move between the sections");
 
 ~currentLetterText = StaticText(w, Rect(10, 60, 150, 20))
 .string_("Current Letter:")
@@ -285,14 +282,11 @@ w = Window("Boomtown", Rect(
 	~startButtonG,
 ];
 
-~staticStartButtons = [
-	~startButtonAstatic,
-	~startButtonBstatic,
-	~startButtonCstatic,
-	~startButtonDstatic,
-	~startButtonEstatic,
-	~startButtonFstatic,
-	~startButtonGstatic,
+~checkBoxes = [
+	~leadInCheckBox,
+	~practiceModeCheckBox,
+	~multiRecordCheckBox
+
 ];
 
 ~strings = ["A", "B", "C", "D", "E", "F", "G"];
@@ -303,16 +297,10 @@ w = Window("Boomtown", Rect(
 
 });
 
-~staticStartButtons.do({|button, index|
-	button.font_(Font("Avant Garde", size:20));
-	button.states_([[~strings[index], ~blueMid, Color.black]])
-
-});
-
 ~stopButton.states_([["STOP", ~redDark, Color.black]])
 .font_(Font("Avant Garde", size:20));
 
-~notStopButtons = ~startButtons ++ ~staticStartButtons ++ [~testButton, ~recordButton, ~practiceText];
+~notStopButtons = ~startButtons ++ [~testButton, ~recordButton, ~practiceText] ++ ~checkBoxes;
 
 ~startButtonGuiFunc = {
 	~notStopButtons.do({|button|

@@ -186,6 +186,7 @@ SynthDef(\pitchDetective,{ // frequency between loFreq and hiFreq sends a trigge
 		id,
 		freq
 	); //here's where the id number gets set
+
 }).add;
 /*
 ~pitchDet = Synth(\pitchDetective, [
