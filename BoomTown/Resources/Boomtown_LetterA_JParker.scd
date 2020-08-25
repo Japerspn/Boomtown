@@ -19,6 +19,7 @@
 };
 
 ~aToBListener = {	//start Listener
+	{}.defer;
 	~pitchDetAtoB = Synth(\pitchDetective, [
 		\tarFreq: 220, //A3
 		\id, 0

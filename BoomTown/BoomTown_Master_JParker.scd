@@ -7,6 +7,9 @@ s.waitForBoot({
 	~droneBus = Bus.audio(s, 2);
 	~dryBus = Bus.audio(s, 2);
 	~wetBus = Bus.audio(s, 2);
+	~freqBus = Bus.new(\control, 0, 1);
+	b = Buffer.alloc(s, s.sampleRate * 30);
+
 
 	~d2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone18 (D2)_JParker_V2.wav");
 	~g2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone19 (G3)_JParker_V2.wav");
@@ -49,6 +52,7 @@ s.waitForBoot({
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterE_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterF_JParker.scd", "r").readAllString.interpret;
 	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_LetterG_JParker.scd", "r").readAllString.interpret;
+	File(thisProcess.nowExecutingPath.dirname +/+ "Resources/BoomTown_PizzDef_JParker.scd", "r").readAllString.interpret;
 
 
 });
@@ -56,10 +60,10 @@ s.waitForBoot({
 if(s.serverRunning, {
 	Server.killAll;
 	s.options.memSize_(2.pow(20));
-	s.options.numOutputBusChannels_(4);
+	s.options.numOutputBusChannels_(8);
 	s.boot;
 }, {s.options.memSize_(2.pow(20));
-	s.options.numOutputBusChannels_(4);
+	s.options.numOutputBusChannels_(8);
 	s.boot;
 })
 

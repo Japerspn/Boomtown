@@ -34,7 +34,7 @@ SynthDef(\playbackBuf, {// plays specified buffer w/ reverb
 */
 
 SynthDef(\playbackBuf2Chan, {// plays specified buffer w/ reverb
-	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5, gate = 1, atk = 5, rel = 10;
+	arg bufnum = 0, rate = 1, outbus = 0, loop = 1, mix = 0.33, room = 0.5, gate = 1, atk = 5, rel = 10, amp = 1;
 	var sig, env;
 
 	env = EnvGen.kr(Env.adsr(atk, 1, 1, rel), gate: gate, doneAction: 2);
@@ -47,7 +47,7 @@ SynthDef(\playbackBuf2Chan, {// plays specified buffer w/ reverb
 	sig = FreeVerb.ar(sig, mix, room);
 	sig = sig * env;
 
-	Out.ar(~wetBus, sig * 2);
+	Out.ar(outbus, sig * 2 * amp);
 }).add;
 /*
 ~pbSynth2 = Synth(\playbackBuf, [\bufnum: ~bufArrayBig[0], \rate: 0.85, \mix: 0.45, \room: 0.6]);
@@ -186,6 +186,7 @@ SynthDef(\pitchDetective,{ // frequency between loFreq and hiFreq sends a trigge
 		id,
 		freq
 	); //here's where the id number gets set
+
 }).add;
 /*
 ~pitchDet = Synth(\pitchDetective, [
@@ -196,21 +197,21 @@ SynthDef(\pitchDetective,{ // frequency between loFreq and hiFreq sends a trigge
 */
 
 SynthDef(\outSynth, {
-	arg amp = 1, thresh = 0.9, inbus = 0;
+	arg amp = 1, thresh = 0.9, inbus = 0, otherOut = 0;
 	var sig;
 	sig = In.ar(inbus);
 	sig = Pan2.ar(sig, 0);
 	sig = sig * amp;
-/*	sig = Compander.ar(
-		in: sig,
-		control: sig,
-		thresh: thresh,
-		slopeBelow: 1,
-		slopeAbove: 0.5,
-		clampTime: 0.1,
-		relaxTime: 0.1
+	/*	sig = Compander.ar(
+	in: sig,
+	control: sig,
+	thresh: thresh,
+	slopeBelow: 1,
+	slopeAbove: 0.5,
+	clampTime: 0.1,
+	relaxTime: 0.1
 	);*/
-	Out.ar(0, sig);
+	Out.ar([0, otherOut], sig);
 }).add;
 
 SynthDef(\dryOutSynth, {
@@ -219,16 +220,16 @@ SynthDef(\dryOutSynth, {
 	sig = SoundIn.ar(inbus);
 	sig = Pan2.ar(sig, 0);
 	sig = sig * amp;
-/*	sig = Compander.ar(
-		in: sig,
-		control: sig,
-		thresh: thresh,
-		slopeBelow: 1,
-		slopeAbove: 0.5,
-		clampTime: 0.1,
-		relaxTime: 0.1
+	/*	sig = Compander.ar(
+	in: sig,
+	control: sig,
+	thresh: thresh,
+	slopeBelow: 1,
+	slopeAbove: 0.5,
+	clampTime: 0.1,
+	relaxTime: 0.1
 	);*/
-	Out.ar(0, sig);
+	Out.ar([0, 2], sig);
 }).add;
 /*
 (
@@ -250,8 +251,48 @@ SynthDef(\dryOutSynth, {
 )
 */
 
+SynthDef(\pizzDetective, {
+	arg id = 0, thresh = 1;
+	var sig, chain, onsets, pips;
+
+	sig = SoundIn.ar;
+
+	chain = FFT(LocalBuf(512), sig);
+
+	onsets = Onsets.kr(chain, thresh);
+
+	SendTrig.kr(onsets, id)
+}).add;
+/*
+~pizzDet = Synth(\pizzDetective, [\id: 0, \thresh: 3]);
+*/
+
+SynthDef(\bassPizz, {
+	var sig, insig, delsig, shortEnv, longEnv;
+
+	shortEnv = EnvGen.kr(Env(times: [0.1, 5]));
+	longEnv = EnvGen.kr(Env(times: [0.1, 10]), doneAction: 2);
+
+	insig = SoundIn.ar(0);
+	insig = insig * shortEnv;
+
+	sig = PitchShift.ar(insig, pitchRatio: [0.25, 0.5]);
+	sig = Mix.ar(sig);
+	delsig = MultiTap.ar(Array.fib(5, 0.4, 0.1), Array.interpolation(5, 1, 0.1), sig, bufnum: b.bufnum);
+	delsig = DelayL.ar(delsig, LFNoise0.kr(1, 0.5, 0.5), 1);
+	sig = Mix.ar([sig, delsig]);
+
+	sig = FreeVerb.ar(sig, 0.5, 1, 1);
+	sig = Mix.ar([sig * 3, insig]);
+	sig = Pan2.ar(sig, 0);
+	Out.ar(~wetBus, sig * longEnv);
+}).add;
+/*
+~pizz = Synth(\bassPizz);
+*/
 
 ~outSynthSetup = {
+	OSCdef(\pizzDet).enable;
 	if(~dryOut.isPlaying.not, {
 		~dryOut = Synth(\dryOutSynth, [
 			\amp: ~dryOutSlider.value * 2,
@@ -268,6 +309,7 @@ SynthDef(\dryOutSynth, {
 			\amp: ~droneOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: ~droneBus,
+			\otherOut: 6
 		]).register;
 
 	}, {
@@ -279,6 +321,7 @@ SynthDef(\dryOutSynth, {
 			\amp: ~wetOutSlider.value * 2,
 			\thresh: 0.9,
 			\inbus: ~wetBus,
+			\otherOut: 4
 		]).register;
 
 	}, {
