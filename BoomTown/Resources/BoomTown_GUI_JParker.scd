@@ -77,9 +77,9 @@ w = Window("Boomtown", Rect(
 
 ~startButtonF = Button(w, Rect(460, 310, 80, 80))//Letter A
 .action_({
-			~outSynthSetup.value;
-		~letterFFunc.value;
-		~startButtonGuiFunc.value;
+	~outSynthSetup.value;
+	~letterFFunc.value;
+	~startButtonGuiFunc.value;
 	if(~practiceModeCheckBox.value, {}, {~fToGListener.value});
 });
 
@@ -110,6 +110,8 @@ w = Window("Boomtown", Rect(
 	if(~patternPlayer2.isPlaying, {~patternPlayer2.stop});
 	if(t.isPlaying, {t.stop});
 	if(u.isPlaying, {u.stop});
+	if(v.isPlaying, {v.stop});
+
 
 
 	~currentLetter.string_("");
@@ -120,7 +122,9 @@ w = Window("Boomtown", Rect(
 	OSCdef(\dToE).disable;
 	OSCdef(\eToF).disable;
 	OSCdef(\fToG).disable;
+
 	OSCdef(\pizzDet).disable;
+	~pizzDet.free;
 
 	~stopButtonGuiFunc.value;
 	~recordButton.value = 0;

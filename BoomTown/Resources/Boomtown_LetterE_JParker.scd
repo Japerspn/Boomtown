@@ -75,11 +75,13 @@ OSCdef(\dToE).disable;
 
 ~eToFListener = {
 	//Start E to F Listener
-	~pitchDetEtoF = Synth(\pitchDetective, [
-		\tarFreq: 196, //G 3
-		\id, 0
-	]);
-
+	u = Task({
+		10.wait;
+		~pitchDetEtoF = Synth(\pitchDetective, [
+			\tarFreq: 276, //C# 3
+			\id, 0
+		]);
+	}).play;
 	//Start E to F OSC def
 	OSCdef(\eToF).enable;
 };

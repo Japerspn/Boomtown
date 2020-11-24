@@ -10,7 +10,6 @@ s.waitForBoot({
 	~freqBus = Bus.new(\control, 0, 1);
 	b = Buffer.alloc(s, s.sampleRate * 30);
 
-
 	~d2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone18 (D2)_JParker_V2.wav");
 	~g2 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone19 (G3)_JParker_V2.wav");
 	~d3 = Buffer.read(s, thisProcess.nowExecutingPath.dirname +/+ "/Resources/Samples/JDAM_Drone20 (D3)_JParker_V2.wav");
@@ -68,3 +67,5 @@ if(s.serverRunning, {
 })
 
 );
+
+s.options.sampleRate_(44100)

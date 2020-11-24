@@ -293,6 +293,8 @@ SynthDef(\bassPizz, {
 
 ~outSynthSetup = {
 	OSCdef(\pizzDet).enable;
+	~pizzDet = Synth(\pizzDetective, [\id: 0, \thresh: 3]);
+
 	if(~dryOut.isPlaying.not, {
 		~dryOut = Synth(\dryOutSynth, [
 			\amp: ~dryOutSlider.value * 2,

@@ -52,17 +52,19 @@ OSCdef(\eToF).disable;
 			\skipDur: -0.2
 		]);
 	}).play;
-~lowG = Synth(\playbackBuf2Chan, [\bufnum: ~g2, \numChannels: 2, \rate: 1, \mix: 0.85, \room: 0.8]);
+	~lowG = Synth(\playbackBuf2Chan, [\bufnum: ~g2, \numChannels: 2, \rate: 1, \mix: 0.85, \room: 0.8]);
 
 };
 
 ~fToGListener = {
 	//Start F to G Listener
-	~pitchDetFtoG = Synth(\pitchDetective, [
-		\tarFreq: 220, //A 3
-		\id, 0
-	]);
-
+	u = Task({
+		10.wait;
+		~pitchDetFtoG = Synth(\pitchDetective, [
+			\tarFreq: 220, //A 3
+			\id, 0
+		]);
+	}).play;
 	//Start F to G OSC def
 	OSCdef(\fToG).enable;
 };

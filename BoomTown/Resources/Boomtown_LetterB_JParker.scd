@@ -51,11 +51,12 @@ OSCdef(\aToB).disable;
 
 ~bToCListener = {
 	//Start B to C Listener
+	u = Task({
 	~pitchDetBtoC = Synth(\pitchDetective, [
 		\tarFreq: 233, //B-flat 3
 		\id, 0
 	]);
-
+	}).play;
 	//Start B to C OSC def
 	OSCdef(\bToC).enable;
 

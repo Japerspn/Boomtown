@@ -74,10 +74,13 @@ OSCdef(\cToD).disable;
 
 ~dToEListener = {
 	//Start D to E Listener
-	~pitchDetDtoE = Synth(\pitchDetective, [
-		\tarFreq: 233, //Bb 3
-		\id, 0
-	]);
+	u = Task({
+		10.wait;
+		~pitchDetDtoE = Synth(\pitchDetective, [
+			\tarFreq: 233, //Bb 3
+			\id, 0
+		]);
+	}).play;
 
 	//Start D to D OSC def
 	OSCdef(\dToE).enable;
